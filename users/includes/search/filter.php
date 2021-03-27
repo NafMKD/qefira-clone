@@ -1,6 +1,5 @@
-
 <form>
-	<input type="hidden" class="form-control" value="<?php echo $_GET['c']; ?>">
+	<input type="text" class="form-control" value="<?php echo $_GET['q']; ?>">
 	<div class="form-group">
 		<label>Sort By</label>
 		<select class="form-control">

@@ -62,21 +62,11 @@
     <div class="container">  
 
       <ul class="navbar-nav ml-4" >
-       <li class="nav-item">
-         <a href="categories.php?c=electonics" class="nav-link text-white">Electronics</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=home-garden-kids" class="nav-link text-white">Home, Garden & Kids</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=vehicles" class="nav-link text-white">Vehicles</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=car-parts" class="nav-link text-white">Car Parts & Accessories</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=property-rental" class="nav-link text-white">Property Rentals & Sales</a>
-       </li>
+        <?php foreach ($catagories as $key): ?>
+          <li class="nav-item">
+           <a href="categories.php?c=<?php echo $key['cat_id']; ?>" class="nav-link text-white"><?php echo $key['name']; ?></a>
+         </li>
+        <?php endforeach ?>
        <li class="nav-item d-none d-sm-inline-block">
          <a href="#" class="nav-link text-white"><i class="fas fa-th-large mr-2"></i>Other Catagories</a>
        </li>

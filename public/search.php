@@ -4,6 +4,11 @@ include 'includes/ls.php';
 if(!isset($_GET['q']) || $_GET['q']==""){
 	header("location: /qefira-clone/public/");
 }
+$obj_register = new register;
+$obj_fetch = new fetch;
+$obj_const = new constant;
+
+$catagories = $obj_fetch->fetchCatagories("ALL");
 ?>
 <!DOCTYPE html>
 <html lang="en">

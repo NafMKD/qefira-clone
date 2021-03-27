@@ -25,7 +25,7 @@ class login extends db
 				return $msg;
 			}elseif($isactive==1){
 				$_SESSION['userid'] = $id;
-				header('location: users/');
+				header('location: ../users/');
 			}
 			
 		} else {
@@ -34,17 +34,24 @@ class login extends db
 		}
 	}
 
-	public function userChecker($phone)
+
+	public function adminSignin($username, $password)
 	{
+		$this->phone = mysqli_real_escape_string($this->conn(), $username);
+		$this->password = mysqli_real_escape_string($this->conn(), md5($password));
 
-		$phone = mysqli_real_escape_string($this->conn(), $phone);
-		$sqlss = mysqli_query($this->conn(), "SELECT * FROM student WHERE stud_id = '$phone'");
-		if (mysqli_num_rows($sqlss) == 1) {
-			$msg = "yes";
+		$sql = "SELECT * FROM admin WHERE username = '$this->phone' AND password = '$this->password'";
+		$query = mysqli_query($this->conn(), $sql);
+
+		if (mysqli_num_rows($query) == 1) {
+			$sqli = mysqli_fetch_assoc($query);
+			$id = $sqli['admin_id'];
+			$_SESSION['adminid'] = $id;
+			header('location: ../admin/home.php');
+			
 		} else {
-			$msg = "no";
+			$msg = "Username or Password Incorect";
+			return $msg;
 		}
-
-		return $msg;
 	}
 }

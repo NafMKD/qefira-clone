@@ -4,6 +4,11 @@ include 'includes/ls.php';
 if(!isset($_GET['i']) || $_GET['i']==""){
 	header("location: /qefira-clone/public/");
 }
+$obj_register = new register;
+$obj_fetch = new fetch;
+$obj_const = new constant;
+
+$catagories = $obj_fetch->fetchCatagories("ALL");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +33,7 @@ if(!isset($_GET['i']) || $_GET['i']==""){
 									<li class="breadcrumb-item active"><?php if(isset($_GET['i'])){echo $_GET['i']; } ?></li>
 								</ol>
 								
-								<a href="/qefira-clone/public/" class="float-md-right mr-5">
+								<a href="#" id="detailBack" class="float-md-right mr-5">
 									<i class="fas fa-angle-left mr-1"></i>
 									Back
 								</a>

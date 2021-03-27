@@ -6,4 +6,3 @@
 
 <link rel="stylesheet" href="../assets/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
-<link rel="stylesheet" href="../assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">

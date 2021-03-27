@@ -57,9 +57,22 @@
 	</div>
 
 	<div style="margin-top: 15%; text-align: center;" >
-		<h1>Checking your browser before accessing Qefira-clone </h1>
-		<h3>This process is automatic. Your browser will redirect to qefira-clone shortly</h3>
-		<h4>Please allow up to 5 seconds.</h4>
+		<?php if(isset($_GET['type'])):?>
+			<?php if($_GET['type'] == "logout"):?>
+
+				<h1>Signing you out</h1>
+				<h3>This process is automatic. Your browser will redirect to main page shortly</h3>
+				<h4>Please allow up to 5 seconds.</h4>
+
+			<?php endif?>	
+		<?php else:?>
+
+			<h1>Checking your browser before accessing Qefira-clone </h1>
+			<h3>This process is automatic. Your browser will redirect to qefira-clone shortly</h3>
+			<h4>Please allow up to 5 seconds.</h4>
+
+		<?php endif?>
+		
 	</div>
 
 
@@ -67,7 +80,7 @@
 		window.setTimeout(function(){
 			window.location.href = "public/";
 
-		}, 3000);
+		}, 1000);
 	</script>
 </body>
 </html>

@@ -1,23 +1,6 @@
 <script src="../assets/jquery/jquery.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/dist/js/adminlte.min.js"></script>
-<script src="../assets/sweetalert2/sweetalert2.min.js"></script>
-<?php if(isset($errSession)): ?>
-<script>
-  $(function(){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-      Toast.fire({
-        icon: 'error',
-        title: 'You are not authorized!, please login to continue'
-      })
-  });
-</script>
-<?php endif ?>
 <script>
 	<?php if(isset($msj_register)):?>
 		$('#modal-signup').modal('show');

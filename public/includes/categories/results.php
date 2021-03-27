@@ -1,5 +1,8 @@
-
-<a href="detail.php?i=1012" style="color: black;">
+<?php foreach ($items_normal as $key ): 
+	$item_detail = $obj_fetch->fetchItemsDetail("INDIVIDUAL","item_id/".$key['item_id'])[0];
+	?>
+	
+<a href="detail.php?i=<?php echo $item_detail['item_id'];?>" style="color: black;">
 	<div class="card">
 		<div class="card-body">
 			<div class="row">
@@ -7,10 +10,10 @@
 					<img src="../assets/dist/img/earphones.jpg" style="width: 178px;height: 160px;">
 				</div>
 				<div class="col-md-8">
-					<p class="text-bold"style="font-size: 20px;">Transcend Hard Disk(1 TB)</p>
-					<p>Arada, Addis Ababa</p>
-					<p>1 Mar, 02:30</p>
-					<p class="text-bold">Br. 2,900</p>
+					<p class="text-bold"style="font-size: 20px;"><?php echo ucwords($key['name']); ?></p>
+					<p><?php echo $item_detail['comp'];?>, <?php echo $obj_const->regionConverter($item_detail['region']);?></p>
+					<p><?php echo $obj_const->dateFormater($key['regdate']);?></p>
+					<p class="text-bold">Br. <?php echo $key['price'];?></p>
 				</div>
 			</div>
 			
@@ -18,3 +21,5 @@
 	</div>
 
 </a>
+
+<?php endforeach ?>

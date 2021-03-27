@@ -1,0 +1,10 @@
+<script src="../assets/jquery/jquery.min.js"></script>
+<script src="../assets/jquery-ui/jquery-ui.min.js"></script>
+<script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/select2/js/select2.full.min.js"></script>
+<script src="../assets/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script src="../assets/datatables/jquery.dataTables.min.js"></script>
+<script src="../assets/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../assets/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="../assets/dist/js/adminlte.js"></script>
+<script src="../assets/summernote/summernote-bs4.min.js"></script> 

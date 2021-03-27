@@ -1,16 +1,13 @@
 <?php 
 session_start();
-include 'includes/ls.php';
-if(!isset($_GET['c']) || $_GET['c']==""){
-	header("location: /qefira-clone/public/");
-}
+include 'autoloader.php';
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
-
-$catagories = $obj_fetch->fetchCatagories("ALL");
-$catagories_detail = $obj_fetch->fetchCatagories("INDIVIDUAL", "cat_id/". $_GET['c'])[0];
-$items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");
+$user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
+if(!isset($_GET['i']) || $_GET['i']==""){
+	header("location: /qefira-clone/public/");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +25,20 @@ $items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");
 				<div class="content-header">
 					<div class="container">
 						<div class="row mb-2">
-							<div class="col-md-3">
-								<h5 class="m-0 text-dark"> Filter Results </h5>
-							</div>
 							<div class="col-md-9">
 								<ol class="breadcrumb float-md-left">
 									<li class="breadcrumb-item"><a href="/qefira-clone/public/">Home</a></li>
-									<li class="breadcrumb-item"><a href="#">Clasifieds</a></li>
-									<li class="breadcrumb-item active"><?php echo $catagories_detail['name'];  ?></li>
+									<li class="breadcrumb-item"><a href="#">Detail</a></li>
+									<li class="breadcrumb-item active"><?php if(isset($_GET['i'])){echo $_GET['i']; } ?></li>
 								</ol>
+								
+								<a href="#" id="detailBack" class="float-md-right mr-5">
+									<i class="fas fa-angle-left mr-1"></i>
+									Back
+								</a>
+							</div>
+							<div class="col-md-3">
+								<h5 class="m-0 text-dark"> Seller Information </h5>
 							</div>
 						</div>
 					</div>
@@ -46,11 +48,11 @@ $items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");
 					<div class="container">
 						<div class="row">
 
-							<div class="col-md-3">
-								<?php include 'includes/categories/filter.php'; ?>
+							<div class="col-md-9">
+								<?php include 'includes/detail/detail.php'; ?>
 							</div>
-							<div class="col-md-8">
-								<?php include 'includes/categories/results.php';?>
+							<div class="col-md-3">
+								<?php include 'includes/detail/contact.php';?>
 							</div>
 						</div>
 					</div>
