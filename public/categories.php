@@ -34,8 +34,14 @@ $items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");
 							<div class="col-md-9">
 								<ol class="breadcrumb float-md-left">
 									<li class="breadcrumb-item"><a href="/qefira-clone/public/">Home</a></li>
-									<li class="breadcrumb-item"><a href="#">Clasifieds</a></li>
+									<li class="breadcrumb-item">Catagories</li>
 									<li class="breadcrumb-item active"><?php echo $catagories_detail['name'];  ?></li>
+									<?php if(isset($_GET['r'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->regionConverter($_GET['r']); ?></li>
+									<?php endif?>
+									<?php if(isset($_GET['f'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->filterIdName($_GET['f']); ?></li>
+									<?php endif?>
 								</ol>
 							</div>
 						</div>

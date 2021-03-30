@@ -1,12 +1,19 @@
 <script src="../assets/jquery/jquery.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/dist/js/adminlte.min.js"></script>
+<script src="../assets/summernote/summernote-bs4.min.js"></script> 
 <script>
+	$('#compose-textarea').summernote({
+	 	height: 70
+	});
 	<?php if(isset($msj_register)):?>
 		$('#modal-signup').modal('show');
 	<?php endif ?>
 	<?php if(isset($msj_login)):?>
 		$('#modal-signin').modal('show');
+	<?php endif ?>
+	<?php if(isset($retrn_message_msg)): ?>
+		$('#modal-send-message').modal('show');
 	<?php endif ?>
 	<?php if(isset($_GET['i'])):?>
 		$('.product-image-thumb').on('click', function() {

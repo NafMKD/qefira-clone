@@ -1,22 +1,61 @@
-
+<?php 
+$user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$item_detail['usr_id'])[0];
+$user_file = $obj_fetch->fetchUsersFile("INDIVIDUAL", "usr_id/".$_SESSION['userid']);
+?>
 <div class="card card-primary card-outline">
   <div class="card-body box-profile">
     <div class="text-center">
-      <img class="profile-user-img img-fluid img-circle"
-      src="../assets/dist/img/sport.jpg"
-      alt="User profile picture">
+      <?php if(count($user_file)==0):?>
+        <img src="../assets/dist/img/user.png" class="profile-user-img img-fluid img-circle" alt="User Image">
+                <?php else: ?>
+                    <img src="../files/users/<?php echo $user_file[0]['filePath']; ?>" class="profile-user-img img-fluid img-circle" alt="User Image">
+                <?php endif?>
     </div>
 
-    <h3 class="profile-username text-center">Tame Best</h3>
+    <h3 class="profile-username text-center"><?php echo ucwords($user_info['name']) ?></h3>
 
-    <p class="text-muted text-center">Member Since 16. Jan 19</p>
+    <p class="text-muted text-center">Member Since <?php echo $obj_const->dateFormater($user_info['datereg']) ?></p>
 
     <ul class="list-group list-group-unbordered mb-3">
       <li class="list-group-item">
-        <b>Email</b> <a class="float-right"><i class="fas fa-times text-red"></i></a>
+        <b>Email</b> 
+        <a class="float-right">
+          <?php if($user_info['isEmail'] == 1): ?>
+            <i class="fas fa-check text-green"></i>
+          <?php else: ?>
+            <i class="fas fa-times text-red"></i>
+          <?php endif?>
+        </a>
       </li>
       <li class="list-group-item">
-        <b>Phone</b> <a class="float-right"><i class="fas fa-check text-green"></i></a>
+        <b>Phone</b> 
+        <a class="float-right">
+          <?php if($user_info['isPhone'] == 1): ?>
+            <i class="fas fa-check text-green"></i>
+          <?php else: ?>
+            <i class="fas fa-times text-red"></i>
+          <?php endif?>
+        </a>
+      </li>
+      <li class="list-group-item">
+        <b>Telegram</b> 
+        <a class="float-right">
+          <?php if($user_info['isTelegram'] == 1): ?>
+            <i class="fas fa-check text-green"></i>
+          <?php else: ?>
+            <i class="fas fa-times text-red"></i>
+          <?php endif?>
+        </a>
+      </li>
+      <li class="list-group-item">
+        <b>Whatsapp</b> 
+        <a class="float-right">
+          <?php if($user_info['isWhatsapp'] == 1): ?>
+            <i class="fas fa-check text-green"></i>
+          <?php else: ?>
+            <i class="fas fa-times text-red"></i>
+          <?php endif?>
+        </a>
       </li>
     </ul>
   </div>
@@ -28,27 +67,93 @@
   </div>
   <div class="card-body">
     <ul class="list-unstyled" style="font-size: 15px;">
-      <li>
-       <button class="btn btn-success btn-flat" style="width: 100%;">Whatsapp</button>
-     </li>
-     <hr>
-     <li>
-       <button class="btn btn-info btn-flat" style="width: 100%;">Telegram</button>
-     </li>
-     <hr>
-     <li>
-       <button class="btn btn-danger btn-flat" style="width: 100%;">Show Number</button>
-     </li>
-     <hr>
-     <center>or</center>	
-     <hr>
-     <li>
-       <button class="btn btn-danger btn-flat" style="width: 100%;">Chat</button>
-     </li>
-     <br>
-     <li>
-       <button class="btn btn-warning btn-flat" style="width: 100%;">Add to Favourites</button>
-     </li>
+      <?php if($user_info['whatsapp'] != ""): ?>
+        <li>
+        <a href="whatsapp://send?phone=<?php echo $user_info['whatsapp']; ?>&text=Hi%2C%20I%27m%20interested%20in%20your%20Qefira-Clone%20Ad%3A%20https%3A%2F%2localhost/qefira-clone/public/detail.php?i=<?php echo $_GET['i']; ?>" target="_blank">
+          <button class="btn btn-success btn-flat" style="width: 100%;">Whatsapp</button>
+        </a>
+        </li>
+        <hr>
+      <?php endif?>
+       <?php if($user_info['telegram'] !=""): ?>
+       <li>
+         <a href="https://t.me/<?php echo $user_info['telegram']; ?>"  target="_blank">
+          <button class="btn btn-info btn-flat" style="width: 100%;">Telegram</button>
+        </a>
+       </li>
+       <hr>
+       <?php endif?>
+       <?php if($user_info['phone'] !=""): ?>
+       <li>
+         <button data-toggle="modal" data-target="#modal-shownumber" class="btn btn-danger btn-flat" style="width: 100%;">Show Number</button>
+       </li>
+       <hr>
+       <?php endif?>
+       <center>or</center>	
+       <hr>
+       <li>
+         <button data-toggle="modal" data-target="#modal-send-message" class="btn btn-danger btn-flat" style="width: 100%;">Chat</button>
+       </li>
    </ul>
  </div>
+</div>
+
+<div class="modal fade" id="modal-shownumber">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Seller Information:</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <dl class="row">
+          <dt class="col-sm-4">Seller Name:</dt>
+          <dd class="col-sm-8"><?php echo ucwords($user_info['name']); ?></dd>
+          <dt class="col-sm-4">Phone Number:</dt>
+          <dd class="col-sm-8"><?php echo $user_info['phone']; ?></dd>
+        </dl> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-send-message">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Message To Seller:</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php if(isset($retrn_message_msg)): ?>
+            <div class="alert <?php echo $retrn_message_msg[0]; ?> alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check"></i> Alert!</h5>
+                <?php echo $retrn_message_msg[1]; ?>
+            </div>
+        <?php endif?>
+        <dl class="row">
+          <dt class="col-sm-4">Item Name:</dt>
+          <dd class="col-sm-8"><?php echo ucwords($item_detail['name']); ?> (Ad ID:<?php echo $item_detail['item_id']; ?>)</dd>
+        </dl> 
+        <form method="post">
+          <input type="hidden" name="msg_to" value="<?php echo $item_detail['usr_id'];?>">
+          <input type="hidden" name="msg_from" value="<?php echo $_SESSION['userid']; ?>">
+          <input type="hidden" name="item_id" value="<?php echo  $item_detail['item_id'];?>">
+          <div class="form-group">
+            <label>Message:</label>
+            <textarea id="compose-textarea" name="message" class="form-control" required>
+              Hi, I'm interested in your Ad, <a href="http://localhost/qefira-clone/users/detail.php?i=<?php echo $item_detail['item_id'];?>"><?php echo ucwords($item_detail['name']); ?> (Ad ID:<?php echo $item_detail['item_id']; ?>)</a>
+            </textarea>
+          </div>
+          <hr>
+          <button type="submit" name="sendmsg" class="btn btn-outline-primary float-right">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

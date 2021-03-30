@@ -1,13 +1,14 @@
 <?php 
 session_start();
 include 'autoloader.php';
+if(!isset($_GET['q']) || $_GET['q']==""){
+	header("location: /qefira-clone/public/");
+}
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
 $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
-if(!isset($_GET['q']) || $_GET['q']==""){
-	header("location: /qefira-clone/public/");
-}
+$catagories = $obj_fetch->fetchCatagories("ALL");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +32,11 @@ if(!isset($_GET['q']) || $_GET['q']==""){
 							<div class="col-md-9">
 								<ol class="breadcrumb float-md-left">
 									<li class="breadcrumb-item"><a href="/qefira-clone/public/">Home</a></li>
-									<li class="breadcrumb-item"><a href="#">Search</a></li>
+									<li class="breadcrumb-item">Search</li>
 									<li class="breadcrumb-item active"><?php if(isset($_GET['q'])){echo $_GET['q']; } ?></li>
+									<?php if(isset($_GET['f'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->filterIdName($_GET['f']); ?></li>
+									<?php endif?>
 								</ol>
 							</div>
 						</div>

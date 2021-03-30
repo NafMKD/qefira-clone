@@ -1,12 +1,27 @@
 <?php 
 session_start();
 include 'autoloader.php';
+if(!isset($_GET['i']) || $_GET['i']==""){
+	header("location: /qefira-clone/public/");
+}
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
 $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
-if(!isset($_GET['i']) || $_GET['i']==""){
-	header("location: /qefira-clone/public/");
+$catagories = $obj_fetch->fetchCatagories("ALL");
+
+if(isset($_POST['sendmsg'])){
+	$msg_to = $_POST['msg_to'];
+	$msg_from = $_POST['msg_from'];
+	$item_id = $_POST['item_id'];
+	$message = $_POST['message'];
+
+	$retrn_message = $obj_register->registerMessages($msg_to, $msg_from, $item_id, $message);
+	if($retrn_message=="errUnk"){
+		$retrn_message_msg= array("alert-danger","Something went wrong, please try again!");
+	}else{
+		$retrn_message_msg=array("alert-success","Message successfuly sended!");
+	}
 }
 ?>
 <!DOCTYPE html>

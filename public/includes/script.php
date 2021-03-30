@@ -2,6 +2,7 @@
 <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/dist/js/adminlte.min.js"></script>
 <script src="../assets/sweetalert2/sweetalert2.min.js"></script>
+<script src="../assets/select2/js//select2.full.min.js"></script>
 <?php if(isset($errSession)): ?>
 <script>
   $(function(){
@@ -36,4 +37,7 @@
 			window.history.back();
 		});
 	<?php endif ?>
+	$('.select2').select2({
+			theme: 'bootstrap4'
+		});
 </script>

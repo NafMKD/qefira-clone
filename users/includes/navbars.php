@@ -3,7 +3,7 @@
 if(!isset($_SESSION['userid'])){
     header("location: ../public/?errSession");
 }
-
+$unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/0");
 ?>
 
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
@@ -12,7 +12,7 @@ if(!isset($_SESSION['userid'])){
     </div>
     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
      <li class="nav-item">
-      <a href="profile.php" >
+      <a href="acc/home.php" >
         <?php
         echo ucwords($user_info['name']); 
         ?>
@@ -30,7 +30,7 @@ if(!isset($_SESSION['userid'])){
 
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white mt-2 mb-2">
   <div class="container">
-    <a href="/qefira-clone/public/" class="navbar-brand">
+    <a href="/qefira-clone/users/" class="navbar-brand">
       <img src="../assets/dist/img/q.svg" alt="Q Logo" class="brand-image"
       style="opacity: .9;height: 40px;">
     </a>
@@ -62,8 +62,8 @@ if(!isset($_SESSION['userid'])){
 
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <li class="nav-item">
-          <a >
-          	<button class="btn btn-danger btn-flat btn-md" data-toggle="modal" data-target="#modal-signup" >Post Free Ad</button>
+          <a href="acc/item.php?addNewItem">
+          	<button class="btn btn-danger btn-flat btn-md" >Post Free Ad</button>
           </a>
         </li>
       </ul>
@@ -72,26 +72,19 @@ if(!isset($_SESSION['userid'])){
 
   <nav class="main-header navbar navbar-expand-md  navbar-danger">
     <div class="container">  
-
       <ul class="navbar-nav ml-4" >
-       <li class="nav-item">
-         <a href="categories.php?c=electonics" class="nav-link text-white">Electronics</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=home-garden-kids" class="nav-link text-white">Home, Garden & Kids</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=vehicles" class="nav-link text-white">Vehicles</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=car-parts" class="nav-link text-white">Car Parts & Accessories</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
-         <a href="categories.php?c=property-rental" class="nav-link text-white">Property Rentals & Sales</a>
-       </li>
-       <li class="nav-item d-none d-sm-inline-block">
+        <?php $cnt=0;foreach ($catagories as $key): ?>
+          <?php if($cnt <5):?>
+            <?php if($key['isactive']==1):?>
+              <li class="nav-item">
+               <a href="categories.php?c=<?php echo $key['cat_id']; ?>" class="nav-link text-white"><?php echo $key['name']; ?></a>
+              </li>
+            <?php $cnt++;endif?>
+          <?php endif ?>
+        <?php endforeach ?>
+        <li class="nav-item d-none d-sm-inline-block">
          <a href="#" class="nav-link text-white"><i class="fas fa-th-large mr-2"></i>Other Catagories</a>
-       </li>
-     </ul>    
+        </li>
+      </ul>    
    </div>
  </nav>

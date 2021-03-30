@@ -1,53 +1,43 @@
+<?php 
+$item_detail = $obj_fetch->fetchItems("INDIVIDUAL", $_GET['i'])[0];
+$item_file = $obj_fetch->fetchItemsFile("INDIVIDUAL", "item_id/".$_GET['i']);
+$catagorykey = $obj_fetch->fetchCatKey("INDIVIDUAL", "cat_id/".$item_detail['cat_id']);
+?>
 <div class="card card-solid">
   <div class="card-body">
     <div class="col-12 col-sm-10">
       <div class="col-12">
-        <img src="../assets/dist/img/prod-1.jpg" class="product-image" alt="Item Image">
+        <img src="../files/items/<?php echo $item_file[0]['filePath']; ?>" class="product-image" alt="Item Image">
       </div>
       <div class="col-12 product-image-thumbs">
-        <div class="product-image-thumb active"><img src="../assets/dist/img/prod-1.jpg" alt="Item Image"></div>
-        <div class="product-image-thumb" ><img src="../assets/dist/img/prod-2.jpg" alt="Item Image"></div>
-        <div class="product-image-thumb" ><img src="../assets/dist/img/prod-3.jpg" alt="Item Image"></div>
-        <div class="product-image-thumb" ><img src="../assets/dist/img/prod-4.jpg" alt="Item Image"></div>
-        <div class="product-image-thumb" ><img src="../assets/dist/img/prod-5.jpg" alt="Item Image"></div>
+        <?php for($i=0;$i<count($item_file);$i++): ?>
+          <?php if($i==0):?>
+            <div class="product-image-thumb active"><img src="../files/items/<?php echo $item_file[$i]['filePath']; ?>" alt="Item Image"></div>
+          <?php else:?>
+            <div class="product-image-thumb" ><img src="../files/items/<?php echo $item_file[$i]['filePath']; ?>" alt="Item Image"></div>
+          <?php endif?>
+        <?php endfor ?>
       </div>
     </div>
     <br>
-    <span>Friday March 19, 2021</span>
+    <span><?php echo $obj_const->dateFormaterDetail($item_detail['regdate']);?></span>
     <span class="float-right">Ad ID: <?php echo $_GET['i']; ?></span>       
-    <p style="font-size: 20px;" class="text-red text-bold">Br. 3,000</p>
-    <p>Hp probook 15.6”</p>
-    <span><i class="fas fa-map-marker"></i> Bole, Addis Ababa</span>
+    <p style="font-size: 20px;" class="text-red text-bold">Br. <?php echo number_format($item_detail['price']);?></p>
+    <p><?php echo ucwords($item_detail['name']);?></p>
+    <span><i class="fas fa-map-marker"></i> <?php echo ucwords($item_detail['comp']);?>, <?php echo ucwords($item_detail['city']);?></span>
     <hr>
     <p class="text-bold">Specifications:</p>
     <dl class="row">
-      <dt class="col-sm-4">Condition</dt>
-      <dd class="col-sm-8">New</dd>
-
-      <dt class="col-sm-4">Brand</dt>
-      <dd class="col-sm-8">HpLaptop</dd>
-
-      <dt class="col-sm-4">model</dt>
-      <dd class="col-sm-8">Probook G1 650</dd>
-
-      <dt class="col-sm-4">Screen Size</dt>
-      <dd class="col-sm-8">15.6 Inches</dd>
-
-      <dt class="col-sm-4">RAM (Gb) </dt>
-      <dd class="col-sm-8">8 GB</dd>
-
-      <dt class="col-sm-4">Hard Drive (Gb) </dt>
-      <dd class="col-sm-8">1,000 GB</dd>
+      <?php foreach($catagorykey as $key):
+        $value = $obj_fetch->fetchItemsKeyDetail("INDIVIDUALDETAIL", $item_detail['item_id']."/".$key['cat_key_id'])[0];
+        ?>
+        <dt class="col-sm-4"><?php echo ucwords($key['catkey']); ?></dt>
+        <dd class="col-sm-8"><?php echo ucwords($value['cat_value']); ?></dd>
+      <?php endforeach?>
+      
     </dl>    
     <hr>
     <p class="text-bold">Description:</p>
-    <p>Hp pro book G1 650<br>
-      core i5<br>
-      1tera hdd<br>
-      8gb ram<br>
-      2.5 Ghz speed<br>
-      Full hd 1080<br>
-      15.6inch screen<br>
-    6hr and above battery</p>
+    <?php echo $item_detail['descr']; ?>
   </div>
 </div>

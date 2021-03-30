@@ -62,15 +62,19 @@
     <div class="container">  
 
       <ul class="navbar-nav ml-4" >
-        <?php foreach ($catagories as $key): ?>
-          <li class="nav-item">
-           <a href="categories.php?c=<?php echo $key['cat_id']; ?>" class="nav-link text-white"><?php echo $key['name']; ?></a>
-         </li>
+        <?php $cnt=0;foreach ($catagories as $key): ?>
+          <?php if($cnt <5):?>
+            <?php if($key['isactive']==1):?>
+              <li class="nav-item">
+               <a href="categories.php?c=<?php echo $key['cat_id']; ?>" class="nav-link text-white"><?php echo $key['name']; ?></a>
+              </li>
+            <?php $cnt++;endif?>
+          <?php endif ?>
         <?php endforeach ?>
-       <li class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
          <a href="#" class="nav-link text-white"><i class="fas fa-th-large mr-2"></i>Other Catagories</a>
-       </li>
-     </ul>    
+        </li>
+      </ul>    
    </div>
  </nav>
 

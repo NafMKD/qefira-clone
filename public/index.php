@@ -42,10 +42,10 @@ if(isset($_GET['errSession'])){
 				<hr>
 				<div class="row ml-3 mr-3">
 					<div class="col-md-2">
-						<?php foreach ($premium_ads as $key ): 
+						<?php $cntp=0;foreach ($premium_ads as $key ): 
 							$filepath = $obj_fetch->fetchItemsFile("INDIVIDUAL", "item_id/".$key['item_id'])[0];
 							?>
-							
+							<?php if($cntp<6): ?>
 							<div class="position-relative p-1 bg-white" style="height: auto;">
 								<a href="detail.php?i=<?php echo $key['item_id'];?>">
 								<img src="../files/items/<?php echo $filepath['filePath']; ?>"class="img-fluid">
@@ -54,11 +54,11 @@ if(isset($_GET['errSession'])){
 										Gold
 									</div>
 								</div>
-								<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo $key['price']; ?>
+								<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo number_format($key['price']); ?>
 								</a>
 							</div>
-							
-						<?php endforeach ?>
+							<?php endif ?>
+						<?php $cntp++;endforeach ?>
 					</div>
 				</div>
 				<hr>
@@ -67,10 +67,10 @@ if(isset($_GET['errSession'])){
 				<hr>
 				<div class="container">
 					<div class="row ml-3 mr-3">
-						<?php foreach ($free_ads as $key ): 
+						<?php $cntf=0;foreach ($free_ads as $key ): 
 							$filepath = $obj_fetch->fetchItemsFile("INDIVIDUAL", "item_id/".$key['item_id'])[0];
 							?>
-							
+							<?php if($cntf<8): ?>
 							<div class="col-md-3 mt-3">
 								<a href="detail.php?i=<?php echo $key['item_id'];?>">
 								<div class="position-relative p-1 bg-white" style="height: auto;">
@@ -80,12 +80,12 @@ if(isset($_GET['errSession'])){
 											New
 										</div>
 									</div>
-									<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo $key['price']; ?>
+									<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo number_format($key['price']); ?>
 								</div>
 								</a>
 							</div>
-							
-						<?php endforeach ?>
+							<?php endif ?>
+						<?php $cntf++;endforeach ?>
 					</div>
 			</div>
 

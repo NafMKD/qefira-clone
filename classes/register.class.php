@@ -7,7 +7,13 @@ class register extends db
 {
 	private function dategen(){
 		date_default_timezone_set("Africa/Addis_Ababa");
-        $datefroinsert = date("m/d/Y");
+        $datefroinsert = date("m/d/Y H:i:s");
+        return $datefroinsert;
+	}
+
+	private function dateGenerator($req){
+		date_default_timezone_set("Africa/Addis_Ababa");
+        $datefroinsert = date($req);
         return $datefroinsert;
 	}
 
@@ -111,15 +117,20 @@ class register extends db
 	 * @return Case #1 -> item id = data succesfuly inserted
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
 	 */
-	public function registerItems($cat_id, $name, $price, $negtype){
+	public function registerItems($cat_id, $usr_id, $name, $price, $descr, $region, $comp, $city,$negtype){
 		$cat_id = $this->myencode($cat_id);
 		$name = $this->myencode($name);
+		$usr_id = $this->myencode($usr_id);
 		$price = $this->myencode($price);
+		$descr = $this->myencode($descr);
+		$region = $this->myencode($region);
+		$comp = $this->myencode($comp);
+		$city = $this->myencode($city);
 		$negtype = $this->myencode($negtype);
 		$newid = $this->idgenerator("items", "item_id", 12000);
 		$date = $this->dategen();
 
-		$sql = "INSERT INTO items(item_id, cat_id, ad_item_id, name, price, negtype, isactive, regdate) VALUES('$newid', '$cat_id', 0, '$name', '$price', '$negtype', 1, '$date')";
+		$sql = "INSERT INTO items(item_id, cat_id, usr_id, ad_item_id, name, price, descr, region, comp, city, negtype, isactive, regdate) VALUES('$newid', '$cat_id', '$usr_id',0, '$name', '$price', '$descr', '$region', '$comp', '$city', '$negtype', 1, '$date')";
 		if(mysqli_query($this->conn(), $sql)){
 			return $newid;
 		}else{
@@ -127,27 +138,6 @@ class register extends db
 		}
 	}
 
-	/**
-	 * Insertion of data to Items Detail table
-	 * @param $item_id = the item id, $descr = short description about the item, $region = item region, $comp = item cpmopund, $city = item city
-	 * @return Case #1 -> success = data succesfuly inserted
-	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
-	 */
-	public function registerItemDetail($item_id, $descr, $region, $comp, $city){
-		$item_id = $this->myencode($item_id);
-		$descr = $this->myencode($descr);
-		$region = $this->myencode($region);
-		$comp = $this->myencode($comp);
-		$city = $this->myencode($city);
-		$date = $this->dategen();
-
-		$sql = "INSERT INTO items_detail(item_id, descr, region, comp, city, datreg) VALUES('$item_id', '$descr', '$region', '$comp', '$city', '$date')";
-		if(mysqli_query($this->conn(), $sql)){
-			return "success";
-		}else{
-			return "errUnk";
-		}
-	}
 
 	/**
 	 * Insertion of data to Items Key Detail table
@@ -172,20 +162,21 @@ class register extends db
 	/**
 	 * Insertion of data to Messages table
 	 * @param $msg_to = reciver id, $msg_from = sender id, $item_id = item id, $message = message content
-	 * @return Case #1 -> success = data succesfuly inserted
+	 * @return Case #1 -> $newid = data succesfuly inserted
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
 	 */
-	public function registerMessages($msg_to, $msg_from, $item_id, $message){
+	public function registerMessages($msg_to, $msg_from, $item_id, $message, $reply=""){
 		$msg_to = $this->myencode($msg_to);
 		$msg_from = $this->myencode($msg_from);
 		$item_id = $this->myencode($item_id);
 		$message = $this->myencode($message);
+		$reply = $this->myencode($reply);
 		$newid = $this->idgenerator("messages", "msg_id", 17000);
 		$date = $this->dategen();
 
-		$sql = "INSERT INTO messages(msg_id, msg_to, msg_from, item_id, message, isreaded, datereg) VALUES('$newid', '$msg_to', '$msg_from', '$item_id', '$message', 1, '$date')";
+		$sql = "INSERT INTO messages(msg_id, msg_to, msg_from, item_id, message, reply, isreaded, datereg) VALUES('$newid', '$msg_to', '$msg_from', '$item_id', '$message', '$reply',0, '$date')";
 		if(mysqli_query($this->conn(), $sql)){
-			return "success";
+			return $newid;
 		}else{
 			return "errUnk";
 		}
@@ -248,6 +239,23 @@ class register extends db
 		}
 	}
 
+	/**
+	 * Insertion of data to Users File table
+	 * @param $usr_id = item id, $target = table column
+	 * @return Case #1 -> success = data succesfuly inserted
+	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
+	 */
+	public function registerUserAuthentication($usr_id,$target){
+		$usr_id = $this->myencode($usr_id);
+		$target = $this->myencode($target);
+		$rand = mt_rand(100000,999999);
+		$sql = "UPDATE users SET $target='$rand' WHERE usr_id='$usr_id'";
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
 
 #################################################################################################################################
 
@@ -255,18 +263,17 @@ class register extends db
 	/**
 	 *
 	 * Upload to Items_file
-	 * @param $item_id = item id, $file = the file to be uploaded
+	 * @param $item_id = item id, $file = the file to be uploaded, $folder=where to upload, $position=file position
 	 * @return Case #1 -> success => successfuly uploaded
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other 
 	*/
-	public function uploadItemFile($item_id,$file){
-		$date_path = $this->dateGenenetor("mdY");
+	public function uploadItemFile($item_id,$file,$position,$folder){
+		$date_path = $this->dateGenerator("mdY");
         $rand = uniqid();
 
-		$main = $_FILES[$file] ['name'];
+		$main = $_FILES[$file] ['name'][$position];
         $name = "IFile_".$date_path."_".$rand."_".$main."";
-        $loc = $_FILES[$file] ['tmp_name'];
-        $folder ='../files/items/';
+        $loc = $_FILES[$file] ['tmp_name'][$position];
         if(move_uploaded_file($loc, $folder.$name)){
         	$this->registerItemFile($item_id,$name);
         	return "success";
@@ -279,18 +286,17 @@ class register extends db
 	/**
 	 *
 	 * Upload to messages_file
-	 * @param $msg_id = message id, $file = the file to be uploaded
+	 * @param $msg_id = message id, $file = the file to be uploaded, $folder=where to upload, $position=file position
 	 * @return Case #1 -> success => successfuly uploaded
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other 
 	*/
-	public function uploadMessagesFile($msg_id,$file){
-		$date_path = $this->dateGenenetor("mdY");
+	public function uploadMessagesFile($msg_id,$file,$position,$folder){
+		$date_path = $this->dateGenerator("mdY");
         $rand = uniqid();
 
-		$main = $_FILES[$file] ['name'];
+		$main = $_FILES[$file] ['name'][$position];
         $name = "MFile_".$date_path."_".$rand."_".$main."";
-        $loc = $_FILES[$file] ['tmp_name'];
-        $folder ='../files/message/';
+        $loc = $_FILES[$file] ['tmp_name'][$position];
         if(move_uploaded_file($loc, $folder.$name)){
         	$this->registerMessageFile($msg_id,$name);
         	return "success";
@@ -303,18 +309,17 @@ class register extends db
 	/**
 	 *
 	 * Upload to users_file
-	 * @param $usr_id = user id, $file = the file to be uploaded
+	 * @param $usr_id = user id, $file = the file to be uploaded, $folder=where to upload
 	 * @return Case #1 -> success => successfuly uploaded
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other 
 	*/
-	public function uploadUsersFile($usr_id,$file){
-		$date_path = $this->dateGenenetor("mdY");
+	public function uploadUsersFile($usr_id,$file,$folder){
+		$date_path = $this->dateGenerator("mdY");
         $rand = uniqid();
 
 		$main = $_FILES[$file] ['name'];
         $name = "MFile_".$date_path."_".$rand."_".$main."";
         $loc = $_FILES[$file] ['tmp_name'];
-        $folder ='../files/users/';
         if(move_uploaded_file($loc, $folder.$name)){
         	$this->registerUsersFile($usr_id,$name);
         	return "success";
@@ -322,5 +327,40 @@ class register extends db
         	return "errUnk";
         }
 	}
+
+	/**
+	 *
+	 * Upldate to users_file
+	 * @param $usr_id = user id, $file = the file to be uploaded, $folder=where to upload, $oldfile=old file name
+	 * @return Case #1 -> success => successfuly uploaded
+	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other 
+	*/
+	public function updateUserFile($usr_id,$file,$folder,$oldfile){
+		unlink($folder."/".$oldfile."");
+		mysqli_query($this->conn(), "DELETE FROM users_file WHERE usr_id = '$usr_id'");
+
+		$date_path = $this->dateGenerator("mdY");
+        $rand = uniqid();
+
+		$this->uploadUsersFile($usr_id,$file,$folder);
+	}
+
+	/**
+	 *
+	 * Upldate to user status
+	 * @param $usr_id = user id, $key = either 1 or 0
+	 * @return Case #1 -> success => successfuly uploaded
+	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other 
+	*/
+	public function updateUserStatus($usr_id,$key){
+		$usr_id = $this->myencode($usr_id);
+		$sql = "UPDATE users SET isactive='$key' WHERE usr_id='$usr_id'";
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
+
 
 }

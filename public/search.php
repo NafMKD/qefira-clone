@@ -32,8 +32,11 @@ $catagories = $obj_fetch->fetchCatagories("ALL");
 							<div class="col-md-9">
 								<ol class="breadcrumb float-md-left">
 									<li class="breadcrumb-item"><a href="/qefira-clone/public/">Home</a></li>
-									<li class="breadcrumb-item"><a href="#">Search</a></li>
+									<li class="breadcrumb-item">Search</li>
 									<li class="breadcrumb-item active"><?php if(isset($_GET['q'])){echo $_GET['q']; } ?></li>
+									<?php if(isset($_GET['f'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->filterIdName($_GET['f']); ?></li>
+									<?php endif?>
 								</ol>
 							</div>
 						</div>

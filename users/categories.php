@@ -1,13 +1,16 @@
 <?php 
 session_start();
 include 'autoloader.php';
+if(!isset($_GET['c']) || $_GET['c']==""){
+	header("location: /qefira-clone/public/");
+}
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
 $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
-if(!isset($_GET['c']) || $_GET['c']==""){
-	header("location: /qefira-clone/public/");
-}
+$catagories = $obj_fetch->fetchCatagories("ALL");
+$catagories_detail = $obj_fetch->fetchCatagories("INDIVIDUAL", "cat_id/". $_GET['c'])[0];
+$items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +34,14 @@ if(!isset($_GET['c']) || $_GET['c']==""){
 							<div class="col-md-9">
 								<ol class="breadcrumb float-md-left">
 									<li class="breadcrumb-item"><a href="/qefira-clone/public/">Home</a></li>
-									<li class="breadcrumb-item"><a href="#">Clasifieds</a></li>
-									<li class="breadcrumb-item active"><?php if(isset($_GET['c'])){echo $_GET['c']; } ?></li>
+									<li class="breadcrumb-item">Catagories</li>
+									<li class="breadcrumb-item active"><?php echo $catagories_detail['name'];  ?></li>
+									<?php if(isset($_GET['r'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->regionConverter($_GET['r']); ?></li>
+									<?php endif?>
+									<?php if(isset($_GET['f'])): ?>
+										<li class="breadcrumb-item active"><?php echo $obj_const->filterIdName($_GET['f']); ?></li>
+									<?php endif?>
 								</ol>
 							</div>
 						</div>

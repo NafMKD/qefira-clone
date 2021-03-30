@@ -1,5 +1,5 @@
 <?php
-include "config.php";
+//include "config.php";
 if (isset($_POST['uploadImageBtn'])) {
     $uploadFolder = 'uploads/';
     foreach ($_FILES['imageFile']['tmp_name'] as $key => $image) {
@@ -16,6 +16,10 @@ if (isset($_POST['uploadImageBtn'])) {
         echo '<script>window.location.href="index.php";</script>';
     }
 }
+
+$dd ="2689";
+echo intval($dd)+78965;
+?>
 
 
   <form action="upload-script.php" method="post" enctype="multipart/form-data">
@@ -34,3 +38,4 @@ if (isset($_POST['uploadImageBtn'])) {
             </div>
         </div>
     </form>
+
