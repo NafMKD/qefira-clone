@@ -1,6 +1,18 @@
 <?php 
 $catagories = $obj_fetch->fetchCatagories("ALL");
-$cheker = intval($user_info['isPhone'])+intval($user_info['isEmail'])+intval($user_info['isWhatsapp'])+intval($user_info['isTelegram']);
+$cheker = 0;
+if(intval($user_info['isPhone'])==1){
+    $cheker++;
+} 
+if(intval($user_info['isEmail'])==1){
+    $cheker++;
+} 
+if(intval($user_info['isWhatsapp'])==1){
+    $cheker++;
+} 
+if(intval($user_info['isTelegram'])==1){
+    $cheker++;
+} 
 ?>
 <div class="card card-outline card-primary">
     <div class="card-header">
@@ -22,7 +34,7 @@ $cheker = intval($user_info['isPhone'])+intval($user_info['isEmail'])+intval($us
                 <?php echo $reg_return_msg[1]; ?>
             </div>
         <?php endif?>
-        <?php if($cheker==0 || $cheker>4): ?>
+        <?php if($cheker==0): ?>
             <div class="alert alert-danger">
                 <h5><i class="icon fas fa-times"></i> Alert!</h5>
                 You can't post Ads, Because you didn't authenticate any of listed authentication options!
@@ -87,7 +99,7 @@ $cheker = intval($user_info['isPhone'])+intval($user_info['isEmail'])+intval($us
             <?php elseif(isset($_GET['addNewItem']) && isset($_GET['nextStep'])):
                 $catagoryKeys = $obj_fetch->fetchCatKey("INDIVIDUAL", "cat_id/".$_GET['itemCatagory']);
                 ?>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" onsubmit="return fileSizeLimiter(5)">
                     <input type="hidden" name="itemName2" value="<?php echo $_GET['itemName'];?>">
                     <input type="hidden" name="itemPrice2" value="<?php echo $_GET['itemPrice'];?>">
                     <input type="hidden" name="itemAddress2" value="<?php echo $_GET['itemAddress'];?>">
@@ -133,7 +145,8 @@ $cheker = intval($user_info['isPhone'])+intval($user_info['isEmail'])+intval($us
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label>Upload Photo:</label>
-                                <input type="file" name="itemImage[]" required multiple class="form-control">
+                                <input type="file" name="itemImage[]" id="photofile" required multiple class="form-control">
+                                <span id="errFileSize" class="text-red"></span> 
                             </div>
                         </div>
                         <div class="col-md-2"></div>

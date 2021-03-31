@@ -25,14 +25,18 @@ if(isset($_POST['updatuploadUserData'])){
   }
 }
 
-if(isset($_GET['init'])){
-  $int = $_GET['init'];
+if(isset($_POST['init'])){
+  $int = $_POST['init'];
   if($int==1){
     if($user_info['isEmail']==1){
       $final_return=array("alert-danger","Invalid request!");
     }else{
-      $obj_register->registerUserAuthentication($user_info['usr_id'],"isEmail");
-      $final_return=array("alert-success","Authenticatin initiated please check your email!");
+      $return_suth=$obj_register->registerUserAuthentication($user_info['usr_id'],"isEmail",$user_info['email']);
+      if($return_suth == "errSend"){
+        $final_return=array("alert-warning","We are having problem on sending email, please try again!");
+      }else{ 
+        $final_return=array("alert-success","Authenticatin initiated please check your email!");
+      }
     }
   }elseif($int==2){
     if($user_info['isPhone']==1){
@@ -41,14 +45,14 @@ if(isset($_GET['init'])){
       $obj_register->registerUserAuthentication($user_info['usr_id'],"isPhone");
       $final_return=array("alert-success","Authenticatin initiated please check your phone!");
     }
-  }elseif($int==2){
+  }elseif($int==3){
     if($user_info['isTelegram']==1){
       $final_return=array("alert-danger","Invalid request!");
     }else{
       $obj_register->registerUserAuthentication($user_info['usr_id'],"isTelegram");
       $final_return=array("alert-success","Authenticatin initiated please check your telegram!");
     }
-  }elseif($int==2){
+  }elseif($int==4){
     if($user_info['isWhatsapp']==1){
       $final_return=array("alert-danger","Invalid request!");
     }else{
@@ -56,6 +60,29 @@ if(isset($_GET['init'])){
       $final_return=array("alert-success","Authenticatin initiated please check your whatsapp!");
     }
   }
+  $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
+}
+
+if(isset($_POST['btn_auth'])){
+  $for=$_POST['forAuthenticate'];
+  $val = $_POST['authcode'];
+  if($for=="Email"){
+    $return_fun = $obj_fetch->checkAuthenticationCode($_SESSION['userid'],'isEmail',$val);
+  }elseif($for=="Phone"){
+    $return_fun = $obj_fetch->checkAuthenticationCode($_SESSION['userid'],'isPhone',$val);
+  }elseif($for=="Telegram"){
+    $return_fun = $obj_fetch->checkAuthenticationCode($_SESSION['userid'],'isTelegram',$val);
+  }elseif($for=="Whatsapp"){
+    $return_fun = $obj_fetch->checkAuthenticationCode($_SESSION['userid'],'isWhatsapp',$val);
+  }
+  if ($return_fun=="success") {
+    $authcodereturnval = array("alert-success","check-circle","Successfuly auhtenticated!");
+  }elseif ($return_fun=="invalid") {
+    $authcodereturnval = array("alert-danger","times-circle","Invalid code, please try again!");
+  }else{
+    $authcodereturnval = array("alert-danger","times-circle","Something went wrong, please try again!");
+  }
+  $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
 }
 ?>
 <!DOCTYPE html>
@@ -92,5 +119,19 @@ if(isset($_GET['init'])){
 </div>
 
 <?php include 'includes/script.php'?>
+<script>
+  $(function(){
+    $('#autBtn').on('click', function(){
+        $('#modal-authenticate').modal('show');
+        $tr =  $(this).closest('tr');
+        var data = $tr.children("td").map(function(){return $(this).text();}).get();
+        $('#forAuthInput').val(data[1]);
+    });
+  });
+  <?php if(isset($_GET['modal']) && !isset($authcodereturnval)):?>
+    $('#modal-authenticate').modal('show');
+    $('#forAuthInput').val('<?php echo $_GET['modal']; ?>');
+  <?php endif?>
+</script>
 </body>
 </html>

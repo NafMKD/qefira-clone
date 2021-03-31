@@ -208,7 +208,7 @@
                         <?php echo $retrn_message_msg[1]; ?>
                     </div>
                 <?php endif?>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" onsubmit="return fileSizeLimiter(4)">
                     <input type="hidden" name="msg_from" value="<?php echo $message_detail['msg_to']; ?>">
                     <input type="hidden" name="msg_to" value="<?php echo $message_detail['msg_from']; ?>">
                     <input type="hidden" name="item_id" value="<?php echo $message_detail['item_id']; ?>">
@@ -223,7 +223,7 @@
                     <dl class="row">
                        <dt class="col-sm-3">Message:</dt>
                        <dd class="col-sm-9">
-                           <textarea id="compose-textarea" name="message" class="form-control" required></textarea>
+                           <textarea  name="message_body" class="form-control" id="compose-textarea" required></textarea>
                        </dd> 
                     </dl>
                     <hr>
@@ -233,6 +233,7 @@
                             <div class="form-group">
                                 <label>Upload Photo:</label>
                                 <input type="file" id="photofile" name="messageImage[]" multiple class="form-control">
+                                <span id="errFileSize" class="text-red"></span>
                             </div>
                         </div>
                         <div class="col-md-2"></div>

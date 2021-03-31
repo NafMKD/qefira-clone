@@ -10,36 +10,36 @@
 <script src="../../assets/summernote/summernote-bs4.min.js"></script> 
 <script src="../../assets/sweetalert2/sweetalert2.min.js"></script>
 <?php if(isset($_GET['unread']) && isset($_GET['delsuc'])): ?>
-<script>
-  $(function(){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-      Toast.fire({
-        icon: 'success',
-        title: 'Message successfuly deleted!'
-      })
-  });
-</script>
+	<script>
+	  $(function(){
+	    const Toast = Swal.mixin({
+	      toast: true,
+	      position: 'top-end',
+	      showConfirmButton: false,
+	      timer: 3000
+	    });
+	      Toast.fire({
+	        icon: 'success',
+	        title: 'Message successfuly deleted!'
+	      })
+	  });
+	</script>
 <?php endif ?>
 <?php if(isset($_GET['unread']) && isset($_GET['delerr'])): ?>
-<script>
-  $(function(){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000
-    });
-      Toast.fire({
-        icon: 'error',
-        title: 'Someting went wrong, pleasse try again!'
-      })
-  });
-</script>
+	<script>
+	  $(function(){
+	    const Toast = Swal.mixin({
+	      toast: true,
+	      position: 'top-end',
+	      showConfirmButton: false,
+	      timer: 3000
+	    });
+	      Toast.fire({
+	        icon: 'error',
+	        title: 'Someting went wrong, pleasse try again!'
+	      })
+	  });
+	</script>
 <?php endif ?>
 <script>
 	$(function(){
@@ -61,6 +61,13 @@
 	        $(this).append('...');
 	    });
 	});
+	function fileSizeLimiter(d){
+	  	var ti = $('#photofile').get(0).files.length;
+	  	if(ti>d){
+	  		$('#errFileSize').html("Maximum file size is "+d+"!");
+	  		return false;
+	  	}
+	}
 	<?php if(isset($_GET['listItem']) && isset($_GET['view']) ):?>
 		$('.product-image-thumb').on('click', function() {
 			const image_element = $(this).find('img');

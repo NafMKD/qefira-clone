@@ -38,6 +38,9 @@
 		});
 	<?php endif ?>
 	$('.select2').select2({
-			theme: 'bootstrap4'
-		});
+		theme: 'bootstrap4'
+	});
+	$('#sibtn').on('click', function(){
+        $('#sibtn').html("Loading ...");
+    });
 </script>

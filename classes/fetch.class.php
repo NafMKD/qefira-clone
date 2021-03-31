@@ -20,8 +20,33 @@ class fetch extends db
         $datefroinsert = date($req);
         return $datefroinsert;
 	}
+	/**
+	 *
+	 * send email authentication message 
+	 * @param $to=to whome to send,$code=authentication code 
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	 *         Case #3 -> invalid = when the enterd key is not correct 
+	*/
+	private function sendAuthEmail($to,$code){
+		$to = $this->myencode($to);
+		$code = $this->myencode($code);
+		$sub = 'Verify Your Email Address!';
+		$headers =  "From: Qefira-clone";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$body = "Verification code is <b>".$code."</b> <br>
+					use this link to insert the verification code <a href='http://localhost/qefira-clone/users/acc/profile.php?modal=Email'> click here </a>"
+			;
+		if (mail($to, $sub, $body, $headers)) {
+		    return "success";
+		} else {
+		    return "errUnk";
+		}
+	}
 
-
+########################################################################################################################################
+	
 	/**
 	 * Fetching Admin Table 
 	 * @param Case #1 -> $type = "ALL", $key=""
@@ -536,8 +561,9 @@ class fetch extends db
 		$item_id = $this->myencode($item_id);
 		$cat_key_id = $this->myencode($cat_key_id);
 		$cat_value = $this->myencode($cat_value);
+		$date=$this->dategen();
 
-		$sql = "UPDATE items_key_detail SET cat_value='$cat_value' WHERE item_id='$item_id' AND cat_key_id='$cat_key_id'";
+		$sql = "UPDATE items_key_detail SET cat_value='$cat_value', udate='$date' WHERE item_id='$item_id' AND cat_key_id='$cat_key_id'";
 		if(mysqli_query($this->conn(), $sql)){
 			return "success";
 		}else{
@@ -591,9 +617,7 @@ class fetch extends db
 					return "errUnk";
 				}
 			}
-		}
-		
-		
+		}	
 	}
 
 	/**
@@ -612,13 +636,52 @@ class fetch extends db
 		}
 	}
 
+	/**
+	 * update cat_key Table
+	 * @param $cat_key_id=catagory key id,$cat_value = catagory value
+	 * @return Case #1 -> success = table succesfuly updated
+	 *         Case #2 -> errUnk = when the table is not updated because of either there is interuption in connection or other factors.
+	*/
+	public function updateCatagoryKey($cat_key_id,$cat_value){
+		$cat_key_id = $this->myencode($cat_key_id);
+		$cat_value = $this->myencode($cat_value);
+		$date=$this->dategen();
+
+		$sql = "UPDATE cat_key SET catkey='$cat_value', udate='$date' WHERE cat_key_id='$cat_key_id'";
+
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
+
+	/**
+	 * update catagories Table
+	 * @param $cat_id=catagory id,$name = new catagory name
+	 * @return Case #1 -> success = table succesfuly updated
+	 *         Case #2 -> errUnk = when the table is not updated because of either there is interuption in connection or other factors.
+	*/
+	public function updateCatagory($cat_id, $name){
+		$cat_id = $this->myencode($cat_id);
+		$name = $this->myencode($name);
+		$date = $this->dategen();
+
+		$sql = "UPDATE catagories SET name='$name', udate='$date' WHERE cat_id='$cat_id'";
+
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
 ##########################################################################################################################################
 
 	/**
 	 *
-	 * Upldate to users_file
+	 * delete to messages
 	 * @param $msg_id = message id ,$folder = folder path
-	 * @return Case #1 -> success => successfuly uploaded
+	 * @return Case #1 -> success => successfuly deleted
 	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
 	*/
 	public function deleteMessages($msg_id,$folder){
@@ -639,5 +702,78 @@ class fetch extends db
 
 
 	}
+
+	/**
+	 *
+	 * delete to cat_key
+	 * @param $cat_key_id = category id
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	*/
+	public function delectCatagoryKey($cat_key_id){
+		$cat_key_id = $this->myencode($cat_key_id);
+
+		$sql = "DELETE FROM cat_key WHERE cat_key_id='$cat_key_id'";
+
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
+
+	/**
+	 *
+	 * delete to category
+	 * @param $cat_key_id = category id
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	*/
+	public function deleteCatagory($cat_id){
+		$cat_id = $this->myencode($cat_id);
+		$cat_key_id = $this->fetchCatKey("INDIVIDUAL", "cat_key_id/".$cat_id);
+
+		foreach ($cat_key_id as $key) {
+			$this->delectCatagoryKey($key);
+		}
+
+		$sql = "DELETE FROM catagories WHERE cat_id='$cat_id'";
+
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
+	
+############################################################################################################################################
+
+	/**
+	 *
+	 * check authentication 
+	 * @param $usr_id=user id,$for=for which method,$val=enterd code 
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	 *         Case #3 -> invalid = when the enterd key is not correct 
+	*/
+	public function checkAuthenticationCode($usr_id,$for,$val){
+		$for = $this->myencode($for);
+		$val = $this->myencode($val);
+
+		$original = $this->fetchUsers("INDIVIDUAL", "usr_id/".$usr_id)[0];
+
+		if($original[$for]==$val){
+			$sql = "UPDATE users SET $for=1 WHERE usr_id='$usr_id'";
+			if(mysqli_query($this->conn(),$sql)){
+				return "success";
+			}else{
+				return "errUnk";
+			}
+		}else{
+			return "invalid";
+		}
+
+	}
+
 	
 }

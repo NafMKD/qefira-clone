@@ -1,5 +1,5 @@
 <?php
-//include "config.php";
+/*//include "config.php";
 if (isset($_POST['uploadImageBtn'])) {
     $uploadFolder = 'uploads/';
     foreach ($_FILES['imageFile']['tmp_name'] as $key => $image) {
@@ -18,11 +18,34 @@ if (isset($_POST['uploadImageBtn'])) {
 }
 
 $dd ="2689";
-echo intval($dd)+78965;
+echo intval($dd)+78965;*/
+
+
+$to_email = "filika23@gmail.com";
+$subject = "Test from local";
+$body = "Hi, This is test email from local";
+$headers = "From: ---";
+
+if (mail($to_email, $subject, $body, $headers)) {
+    echo "Email successfully sent to $to_email...";
+} else {
+    echo "Email sending failed...";
+}
+
+var selection = document.getElementById('file');
+for (var i=0; i<selection.files.length; i++) {
+    var ext = selection.files[i].name.substr(-3);
+    if(ext!== "mp4" && ext!== "m4v" && ext!== "fv4")  {
+        alert('not an accepted file extension');
+        return false;
+    }
+} 
+
 ?>
 
 
-  <form action="upload-script.php" method="post" enctype="multipart/form-data">
+
+  <!--<form action="upload-script.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <div class="row">
                <div class="col-md-4">
@@ -37,5 +60,5 @@ echo intval($dd)+78965;
                 </div>
             </div>
         </div>
-    </form>
+    </form>-!>
 

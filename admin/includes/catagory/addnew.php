@@ -16,7 +16,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Category Name:</label>
-                        <input type="text" name="catagoryNameEnter" placeholder="Enter Category Name.." class="form-control">
+                        <input type="text" name="catagoryNameEnter" placeholder="Enter Category Name.." class="form-control" required>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -26,7 +26,7 @@
                         <button type="button" class="btn btn-tool float-right" id="btnCancleInput"></button>
                         <button type="button" class="btn btn-tool float-right mr-2" id="btnAddInput"><i class="fas fa-plus"></i></button>
                         <input id="counter" name="input_counter" hidden>
-                        <input type="text" name="catagoryName0" placeholder="Enter Category Key #1.." class="form-control">
+                        <input type="text" name="catagoryName0" placeholder="Enter Category Key #1.." class="form-control" required>
                         <input type="text" name="catagoryName1" id="one" placeholder="Enter Category Key #2.." class="form-control mt-2" hidden>
                         <input type="text" name="catagoryName2" id="two" placeholder="Enter Category Key #3.." class="form-control mt-2" hidden>
                         <input type="text" name="catagoryName3" id="three" placeholder="Enter Category Key #4.." class="form-control mt-2" hidden>

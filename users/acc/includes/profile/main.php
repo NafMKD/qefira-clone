@@ -10,6 +10,13 @@
                 <?php echo $final_return[1]; ?>
             </div>
         <?php endif?>
+        <?php if(isset($authcodereturnval)): ?>
+            <div class="alert <?php echo $authcodereturnval[0]; ?> alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-<?php echo $authcodereturnval[1]; ?>"></i> Alert!</h5>
+                <?php echo $authcodereturnval[2]; ?>
+            </div>
+        <?php endif?>
     	<div class="row">
     		 <div class="col-md-6">
     		 	<dl class="row">
@@ -106,14 +113,15 @@
                             <?php endif?>
                             <td>
                                 <?php if($user_info['isEmail'] ==""):?>
-                                    <a href="?init=1">
-                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
-                                    </a>
+                                    <form method="post">
+                                        <input type="hidden" name="init" value="1">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
+                                    </form>
                                 <?php elseif($user_info['isEmail'] !=""):?>
                                     <?php if($user_info['isEmail'] ==1):?>
                                         No Action Needed
                                     <?php else:?>
-                                        <button class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
+                                        <button id="autBtn" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
                                     <?php endif?>
                                 <?php endif?>
                             </td>
@@ -133,14 +141,15 @@
                             <?php endif?>
                             <td>
                                 <?php if($user_info['isPhone'] ==""):?>
-                                    <a href="?init=2">
-                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
-                                    </a>
+                                    <form method="post">
+                                        <input type="hidden" name="init" value="2">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
+                                    </form>
                                 <?php elseif($user_info['isPhone'] !=""):?>
                                     <?php if($user_info['isPhone'] ==1):?>
                                         No Action Needed
                                     <?php else:?>
-                                        <button class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
+                                        <button id="autBtn" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
                                     <?php endif?>
                                 <?php endif?>
                             </td>
@@ -160,14 +169,15 @@
                             <?php endif?>
                             <td>
                                 <?php if($user_info['isTelegram'] ==""):?>
-                                    <a href="?init=3">
-                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
-                                    </a>
+                                    <form method="post">
+                                        <input type="hidden" name="init" value="3">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
+                                    </form>
                                 <?php elseif($user_info['isTelegram'] !=""):?>
                                     <?php if($user_info['isTelegram'] ==1):?>
                                         No Action Needed
                                     <?php else:?>
-                                        <button class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
+                                        <button id="autBtn" class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
                                     <?php endif?>
                                 <?php endif?>
                             </td>
@@ -187,14 +197,15 @@
                             <?php endif?>
                             <td>
                                 <?php if($user_info['isWhatsapp'] ==""):?>
-                                    <a href="?init=4">
-                                        <button class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
-                                    </a>
+                                    <form method="post">
+                                        <input type="hidden" name="init" value="4">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Initiate</button>
+                                    </form>
                                 <?php elseif($user_info['isWhatsapp'] !=""):?>
                                     <?php if($user_info['isWhatsapp'] ==1):?>
                                         No Action Needed
                                     <?php else:?>
-                                        <button class="btn btn-primary btn-sm"><i class="fas fa-check"></i> Authenticate</button>
+                                        <button id="autBtn" class="btn btn-primary btn-sm" ><i class="fas fa-check"></i> Authenticate</button>
                                     <?php endif?>
                                 <?php endif?>
                             </td>
@@ -204,4 +215,45 @@
             </div>
         </div>
     </div>
+</div>
+
+
+ <div class="modal fade" id="modal-authenticate">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Authenticate</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <p class="login-box-msg">Enter the six-digit code</p>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="hidden" name="forAuthenticate" id="forAuthInput">
+                <input type="text" class="form-control" name="authcode" placeholder="Enter code.." required>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-7"></div>
+            <div class="col-5">
+              <button type="submit" class="btn btn-primary btn-block" id="sibtn" name="btn_auth"><i class="fas fa-check mr-1"></i> Authenticate </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

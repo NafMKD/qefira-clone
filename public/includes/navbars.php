@@ -1,3 +1,10 @@
+<?php 
+
+if(isset($_SESSION['userid'])){
+  header('location: ../users/');
+}
+
+?>
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
   <div class="container">
     <div class="collapse navbar-collapse order-3" id="navbarCollapse">
@@ -130,7 +137,7 @@
           <div class="row">
             <div class="col-7"></div>
             <div class="col-5">
-              <button type="submit" class="btn btn-primary btn-block" name="btn_login" id="btnLogin">Login <i class="fas fa-sign-in-alt ml-1"></i></button>
+              <button type="submit" class="btn btn-primary btn-block" id="sibtn" name="btn_login" id="btnLogin">Login <i class="fas fa-sign-in-alt ml-1"></i></button>
             </div>
           </div>
         </form>
@@ -223,7 +230,7 @@
           <div class="row">
             <div class="col-7"></div>
             <div class="col-5">
-              <button type="submit" class="btn btn-primary btn-block" name="btn_singup" id="btnSingUp">Sign up <i class="fas fa-user-plus ml-1"></i></button>
+              <button type="submit" class="btn btn-primary btn-block" id="sibtn" name="btn_singup" id="btnSingUp">Sign up <i class="fas fa-user-plus ml-1"></i></button>
             </div>
           </div>
         </form>

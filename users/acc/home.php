@@ -48,6 +48,70 @@ $user_items = $obj_fetch->fetchItems("BYUSER", $user_info['usr_id']);
               </a>
             </div>
           </div>
+
+          <?php if($user_info['isEmail'] ==""):?>
+            <div class="callout callout-danger">
+              <h5>Initiate Email!</h5>
+
+              <p>You have to initiate to recive six-digit authentication code!<a href="profile.php">Click here.</a></p>
+            </div>
+          <?php elseif($user_info['isEmail'] !=""):?>
+            <?php if($user_info['isEmail'] !=1):?>
+                <div class="callout callout-warning">
+                  <h5>Authenticate Email!</h5>
+
+                  <p>You intiated Email authentication, now you have to authenticate your email!<a href="profile.php">Click here.</a></p>
+                </div>
+            <?php endif?>
+          <?php endif?>
+
+          <?php if($user_info['isPhone'] ==""):?>
+            <div class="callout callout-danger">
+              <h5>Initiate Phone!</h5>
+
+              <p>You have to initiate to recive six-digit authentication code!<a href="profile.php">Click here.</a></p>
+            </div>
+          <?php elseif($user_info['isPhone'] !=""):?>
+            <?php if($user_info['isPhone'] !=1):?>
+                <div class="callout callout-warning">
+                  <h5>Authenticate Phone!</h5>
+
+                  <p>You intiated Phone authentication, now you have to authenticate your phone!<a href="profile.php">Click here.</a></p>
+                </div>
+            <?php endif?>
+          <?php endif?>
+
+          <?php if($user_info['isTelegram'] ==""):?>
+            <div class="callout callout-danger">
+              <h5>Initiate Telegram!</h5>
+
+              <p>You have to initiate to recive six-digit authentication code!<a href="profile.php">Click here.</a></p>
+            </div>
+          <?php elseif($user_info['isTelegram'] !=""):?>
+            <?php if($user_info['isTelegram'] !=1):?>
+                <div class="callout callout-warning">
+                  <h5>Authenticate Telegram!</h5>
+
+                  <p>You intiated Telegram authentication, now you have to authenticate your telegram!<a href="profile.php">Click here.</a></p>
+                </div>
+            <?php endif?>
+          <?php endif?>
+
+          <?php if($user_info['isWhatsapp'] ==""):?>
+            <div class="callout callout-danger">
+              <h5>Initiate Whatsapp!</h5>
+
+              <p>You have to initiate to recive six-digit authentication code!<a href="profile.php">Click here.</a></p>
+            </div>
+          <?php elseif($user_info['isWhatsapp'] !=""):?>
+            <?php if($user_info['isWhatsapp'] !=1):?>
+                <div class="callout callout-warning">
+                  <h5>Authenticate Whatsapp!</h5>
+
+                  <p>You intiated Whatsapp authentication, now you have to authenticate your whatsapp!<a href="profile.php">Click here.</a></p>
+                </div>
+            <?php endif?>
+          <?php endif?>
       </div>
     </section>
   </div>

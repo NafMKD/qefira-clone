@@ -34,6 +34,31 @@ class register extends db
             return end($id_array) + 1;
         }
     }
+
+    /**
+	 *
+	 * send email authentication message 
+	 * @param $to=to whome to send,$code=authentication code 
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	 *         Case #3 -> invalid = when the enterd key is not correct 
+	*/
+	private function sendAuthEmail($to,$code){
+		$to = $this->myencode($to);
+		$code = $this->myencode($code);
+		$sub = 'Verify Your Email Address!';
+		$headers =  "From: Qefira-clone";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$body = "Verification code is <b>".$code."</b> <br>
+					use this link to insert the verification code <a href='http://localhost/qefira-clone/users/acc/profile.php?modal=Email'> click here </a>"
+			;
+		if (mail($to, $sub, $body, $headers)) {
+		    return "success";
+		} else {
+		    return "errUnk";
+		}
+	}
 #################################################################################################################################
 
 	/**
@@ -241,19 +266,34 @@ class register extends db
 
 	/**
 	 * Insertion of data to Users File table
-	 * @param $usr_id = item id, $target = table column
+	 * @param $usr_id = item id, $target = table column, $email= email of the user
 	 * @return Case #1 -> success = data succesfuly inserted
 	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
+	 *         Case #3 -> errSend = when the email is not sended because of either there is interuption in connection or other factors.
 	 */
-	public function registerUserAuthentication($usr_id,$target){
+	public function registerUserAuthentication($usr_id,$target,$email=""){
 		$usr_id = $this->myencode($usr_id);
 		$target = $this->myencode($target);
 		$rand = mt_rand(100000,999999);
-		$sql = "UPDATE users SET $target='$rand' WHERE usr_id='$usr_id'";
-		if(mysqli_query($this->conn(), $sql)){
-			return "success";
+		if($target=="isEmail"){
+			$emailsend = $this->sendAuthEmail($email,$rand);
+			if($emailsend=="success"){
+				$sql = "UPDATE users SET $target='$rand' WHERE usr_id='$usr_id'";
+				if(mysqli_query($this->conn(), $sql)){
+					return "success";
+				}else{
+					return "errUnk";
+				}
+			}else{
+				return "errSend";
+			}
 		}else{
-			return "errUnk";
+			$sql = "UPDATE users SET $target='$rand' WHERE usr_id='$usr_id'";
+			if(mysqli_query($this->conn(), $sql)){
+				return "success";
+			}else{
+				return "errUnk";
+			}
 		}
 	}
 

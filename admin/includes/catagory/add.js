@@ -42,47 +42,38 @@ $('#btnCancleInput').click(function(){
         $('#one').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
         $('#btnCancleInput').html('');	
-        $('#ch1').val('');
-        $('#pt1').val('');
+        $('#one').val('');
     }else if(parseInt(valCounter1) === 3){
         $('#two').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch2').val('');
-        $('#pt2').val('');
+        $('#two').val('');
     }else if(parseInt(valCounter1) === 4){
         $('#three').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch3').val('');
-        $('#pt3').val('');
+        $('#three').val('');
     }else if(parseInt(valCounter1) === 5){
         $('#four').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch4').val('');
-        $('#pt4').val('');
+        $('#four').val('');
     }else if(parseInt(valCounter1) === 6){
         $('#five').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch5').val('');
-        $('#pt5').val('');
+        $('#five').val('');
     }else if(parseInt(valCounter1) === 7){
         $('#six').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch6').val('');
-        $('#pt6').val('');
+        $('#six').val('');
     }else if(parseInt(valCounter1) === 8){
         $('#seven').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch7').val('');
-        $('#pt7').val('');
+        $('#seven').val('');
     }else if(parseInt(valCounter1) === 9){
         $('#eight').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch8').val('');
-        $('#pt8').val('');
+        $('#eight').val('');
     }else if(parseInt(valCounter1) === 10){
         $('#nine').attr('hidden', true);
         $('#counter').val(parseInt(valCounter1)-1);
-        $('#ch9').val('');
-        $('#pt9').val('');
+        $('#nine').val('');
     }				
 });

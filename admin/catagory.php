@@ -9,6 +9,9 @@ $admin_info = $obj_fetch->fetchAdmin("INDIVIDUAL", "admin_id/".$_SESSION['admini
 
 if(isset($_POST['btnRegisterCatagory'])){
   $counter = $_POST['input_counter'];
+  if ($counter=="") {
+    $counter=1;
+  }
   $cat_arr = array();
   for($i=0;$i<10;$i++){
     $cat_arr[]=$_POST['catagoryName'.$i];
@@ -31,6 +34,72 @@ if(isset($_POST['btnRegisterCatagory'])){
     }
   }
 }
+
+if(isset($_POST['btnUpdateCatagory'])){
+  $catagory_id = $_POST['catagoryid'];
+  $counter = $_POST['input_counter'];
+  $cat_key_id = $_POST['catkeyid'];
+  $cat_key_val = $_POST['catkeyval'];
+  $new_cat_arr = array();
+  for($i=0;$i<10;$i++){
+    $new_cat_arr[]=$_POST['catagoryName'.$i];
+  }
+  $catagoryNameEnter = $_POST['catagoryNameEnter'];
+
+  $catkey_id =explode("/", $cat_key_id);
+  $catkey_val =explode("/", $cat_key_val);
+  array_pop($catkey_id);
+  array_pop($catkey_val);
+
+  $err=0;
+
+  $cat_key_return=$obj_fetch->updateCatagory($catagory_id, $catagoryNameEnter);
+  if($cat_key_return=="errUnk"){
+    $err++;
+  }
+  for ($i=0; $i < count($catkey_val); $i++) { 
+    if($new_cat_arr[$i]!=$catkey_val[$i]){
+      if($new_cat_arr[$i]==""){
+        $cat_key_return = $obj_fetch->delectCatagoryKey($catkey_id[$i],$new_cat_arr[$i]);
+        if($cat_key_return=="errUnk"){
+          $err++;
+        }
+      }else{
+        $cat_key_return = $obj_fetch->updateCatagoryKey($catkey_id[$i],$new_cat_arr[$i]);
+        if($cat_key_return=="errUnk"){
+          $err++;
+        }
+      }
+    }
+  } 
+
+  if($counter>count($catkey_val)){
+    for ($i=count($catkey_val); $i < $counter; $i++) { 
+      $cat_key_return = $obj_register->registerCatKey($catagory_id,$new_cat_arr[$i]);
+    }
+    if($cat_key_return=="errUnk"){
+      $err++;
+    }
+  }
+  if($err==0){
+    $final_update_return = array("alert-success","Category successfuly updated!");
+  }else{
+    $final_update_return = array("alert-danger","Someting went wrong, please try again!");
+  }
+}
+
+if(isset($_GET['delete'])){
+  $cat_id = $_GET['delete'];
+
+  $delete_return = $obj_fetch->deleteCatagory($cat_id);
+
+  if($delete_return=="success"){
+    $final_delete_return=array("alert-success","Category successfuly deleted!");
+  }else{
+    $final_delete_return=array("alert-danger","Someting went wrong, please try again!");
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html>

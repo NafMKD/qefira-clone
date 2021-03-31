@@ -14,9 +14,9 @@
         <li class="nav-item">
           <a href="message.php?unread" class="nav-link <?php if(isset($_GET['unread'])){echo "active" ;} ?>">
             <i class="fas fa-envelope"></i> Unread
-            <?php //if (count($couter) != 0): ?>
-              <span class="badge badge-warning float-right"><?php //echo count($couter); ?></span>
-            <?php //endif ?>
+            <?php if (count($unread_messages_for_aside) != 0): ?>
+              <span class="float-right badge badge-warning"><?php echo count($unread_messages_for_aside); ?></span>
+            <?php endif ?>
           </a>
         </li>
         <li class="nav-item">

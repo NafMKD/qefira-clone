@@ -7,16 +7,16 @@ $obj_fetch = new fetch;
 $obj_const = new constant;
 $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
 $user_file = $obj_fetch->fetchUsersFile("INDIVIDUAL", "usr_id/".$_SESSION['userid']);
-$unread_messages = $obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/0");
-$readed_messages = $obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/1");
-$sended_messages = $obj_fetch->fetchMessage("INDIVIDUAL", "msg_from/".$_SESSION['userid']);
+$unread_messages = array_reverse($obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/0"));
+$readed_messages = array_reverse($obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/1"));
+$sended_messages = array_reverse($obj_fetch->fetchMessage("INDIVIDUAL", "msg_from/".$_SESSION['userid']));
 
 if(isset($_POST['btnSendRply'])){
   $msg_from = $_POST['msg_from'];
   $msg_to = $_POST['msg_to'];
   $item_id = $_POST['item_id'];
   $prev_msg = $_POST['prev_msg'];
-  $message = $_POST['message'];
+  $message = $_POST['message_body'];
 
   $retrn_message = $obj_register->registerMessages($msg_to, $msg_from, $item_id, $message, $prev_msg);
   if($retrn_message=="errUnk"){
