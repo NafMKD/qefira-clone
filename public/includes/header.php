@@ -10,3 +10,13 @@
 
 <link rel="stylesheet" href="../assets/select2/css/select2.min.css">
 <link rel="stylesheet" href="../assets/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<style>
+	.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+	.sticky  {
+  margin-top: 00px;
+}
+</style>

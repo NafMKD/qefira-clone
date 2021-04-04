@@ -1,6 +1,9 @@
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">User Information:</h3>
+        <div class="card-tool">
+            <button class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#modal-changepassword">Change Password</button>
+        </div>
     </div>
     <div class="card-body">
         <?php if(isset($final_return)): ?>
@@ -15,6 +18,13 @@
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h5><i class="icon fas fa-<?php echo $authcodereturnval[1]; ?>"></i> Alert!</h5>
                 <?php echo $authcodereturnval[2]; ?>
+            </div>
+        <?php endif?>
+        <?php if(isset($file_upload_final)): ?>
+            <div class="alert <?php echo $file_upload_final[0]; ?> alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-<?php echo $file_upload_final[1]; ?>"></i> Alert!</h5>
+                <?php echo $file_upload_final[2]; ?>
             </div>
         <?php endif?>
     	<div class="row">
@@ -61,10 +71,11 @@
     		 			<?php endif?>
     		 		</div>
     		 		<div class="col-md-6">
-    		 			<form method="post" enctype="multipart/form-data">
+    		 			<form method="post" enctype="multipart/form-data" onsubmit="return fileSizeLimiter(1)">
 	    		 			<div class="form-group">
 	    		 				<input type="hidden" name="user_ID" value="<?php echo $_SESSION['userid']; ?>">
-	    		 				<input type="file" class="form-control" name="fileNewUser">
+	    		 				<input type="file" class="form-control" id="photofile" name="fileNewUser">
+                                <span class="text-red" id="errFileSize"></span>
 	    		 				<?php if(count($user_file)==0):?>
 	    		 					<button type="submit" name="uploadUserData" class="btn btn-primary float-right mt-1">
 		    		 					<i class="fas fa-upload"></i>

@@ -1,7 +1,9 @@
 <?php 
 session_start();
 include 'autoloader.php';
-
+if(isset($_SESSION['adminid'])){
+    header("location: ../admin/home.php");
+}
 if (isset($_POST['btnSignIn'])) {
   $userid = $_POST['userid'];
   $userpass = $_POST['userpass'];
@@ -25,7 +27,7 @@ if (isset($_POST['btnSignIn'])) {
 <div class="wrapper">
   <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-      <a href="#" class="navbar-brand">
+      <a href="../" class="navbar-brand">
         <img src="../assets/dist/img/q.svg" alt="Q Logo" class="brand-image"
       style="opacity: .9;height: 25px;">
       </a>
@@ -45,8 +47,10 @@ if (isset($_POST['btnSignIn'])) {
   </nav>
   <div class="login-box container mt-5">
     <div class="login-logo">
-      <img src="../assets/dist/img/q.svg" alt="Q Logo" class="brand-image"
-      style="opacity: .9;height: 40px;">  
+      <a href="../" >
+        <img src="../assets/dist/img/q.svg" alt="Q Logo" class="brand-image"
+        style="opacity: .9;height: 40px;">  
+      </a>
     </div>
     <div class="card">
       <div class="card-body login-card-body">

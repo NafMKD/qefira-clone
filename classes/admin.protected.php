@@ -58,5 +58,5 @@ if($rec == "success"){
 	echo "Admin Successfuly Registered!";
 }elseif($rec == "errUnk"){
 	echo "Something Went Wrong, Please try again!";
-}}
+}
 

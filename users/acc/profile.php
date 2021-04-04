@@ -12,7 +12,13 @@ if(isset($_POST['uploadUserData'])){
   $userid = $_POST['user_ID'];
   $folder ='../../files/users/';
   if (!empty($_FILES['fileNewUser']['name'])) {
-    $obj_register->uploadUsersFile($userid, 'fileNewUser',$folder);
+    $file_upload_return = $obj_register->uploadUsersFile($userid, 'fileNewUser',$folder);
+    if($file_upload_return=="success"){
+      $file_upload_final = array("alert-success","check-circle","Photo successfuly uploaded!");
+    }elseif($file_upload_return=="errUnk"){
+      $file_upload_final = array("alert-danger","times-circle","Something went wrong, please try again!");
+    }
+    print_r($file_upload_final);
   }
 }
 
@@ -21,7 +27,13 @@ if(isset($_POST['updatuploadUserData'])){
   $folder ='../../files/users/';
   $oldfile = $user_file[0]['filePath'];
   if (!empty($_FILES['fileNewUser']['name'])) {
-    $obj_register->updateUserFile($userid, 'fileNewUser',$folder,$oldfile);
+    $file_upload_return = $obj_register->updateUserFile($userid, 'fileNewUser',$folder,$oldfile);
+    if($file_upload_return=="success"){
+      $file_upload_final = array("alert-success","check-circle","Photo successfuly updated!");
+    }elseif($file_upload_return=="errUnk"){
+      $file_upload_final = array("alert-danger","times-circle","Something went wrong, please try again!");
+    }
+    print_r($file_upload_return);
   }
 }
 
@@ -83,6 +95,21 @@ if(isset($_POST['btn_auth'])){
     $authcodereturnval = array("alert-danger","times-circle","Something went wrong, please try again!");
   }
   $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$_SESSION['userid'])[0];
+}
+
+if(isset($_POST['btn_change_pass'])){
+  $oldpass = $_POST['old_pass_change'];
+  $newpass = $_POST['new_pass_change'];
+  if($user_info['password']==md5($oldpass)){
+    $return_pass = $obj_register->passwordReset($user_info['usr_id'], $newpass);
+    if($return_pass=="success"){
+      $final_pass_change_return = array("alert-success","check-circle","Password successfuly chenged!");
+    }elseif($return_pass=="errUnk"){
+      $final_pass_change_return = array("alert-danger", "times-circle", "Something went wrong, please try again!");
+    } 
+  }else{
+    $final_pass_change_return = array("alert-danger", "times-circle", "Incorrect old password, please try again!");
+  }
 }
 ?>
 <!DOCTYPE html>

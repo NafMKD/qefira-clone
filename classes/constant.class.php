@@ -142,9 +142,9 @@ class constant extends db
 			return array("BYDATEFILTER","DESC");
 		}elseif($id == 1){
 			return array("BYDATEFILTER","ASC");
-		}elseif($id == 3){
-			return array("PRICEFILTER","ASC");
 		}elseif($id == 2){
+			return array("PRICEFILTER","ASC");
+		}elseif($id == 3){
 			return array("PRICEFILTER","DESC");
 		}
 	}

@@ -7,3 +7,13 @@
 <link rel="stylesheet" href="../assets/fontawesome-free/css/all.min.css">
 <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
 <link rel="stylesheet" href="../assets/summernote/summernote-bs4.css">
+<style>
+	.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+	.sticky  {
+  margin-top: 00px;
+}
+</style>

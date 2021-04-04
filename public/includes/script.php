@@ -40,7 +40,51 @@
 	$('.select2').select2({
 		theme: 'bootstrap4'
 	});
-	$('#sibtn').on('click', function(){
-        $('#sibtn').html("Loading ...");
+	$('.sibtn').on('click', function(){
+        $('.sibtn').html("Loading ...");
     });
+    $('#forgetModal').on('click', function(){
+    	$('#modal-signin').modal('hide');
+    	$('#modal-forgetpassword').modal('show');
+    });
+    $('#singupModal').on('click', function(){
+    	$('#modal-signin').modal('hide');
+    	$('#modal-signup').modal('show');
+    });
+    $('#singinModal').on('click', function(){
+    	$('#modal-signup').modal('hide');
+    	$('#modal-signin').modal('show');
+    });
+
+    <?php if(isset($final_pass_reset)):?>
+		$('#modal-resetpassword').modal('show');
+   		$('#userEmailReset').val('<?php echo $final_pass_reset_modal_dis; ?>');
+	<?php endif ?>
+
+	<?php if(isset($_GET['passwdresetmodal']) && !isset($final_pass_change_modal_dis)):?>
+		$('#modal-resetpassword').modal('show');
+   		$('#userEmailReset').val('<?php echo $_GET['passwdresetmodal']; ?>');
+	<?php endif ?>
+
+	<?php if(isset($final_pass_forget)):?>
+		$('#modal-forgetpassword').modal('show');
+	<?php endif ?>
+
+	<?php if(isset($final_pass_change_modal_dis)):?>
+		$('#modal-changepassword').modal('show');
+   		$('#userEmailChange').val('<?php echo $final_pass_change_modal_dis; ?>');
+	<?php endif ?>
+
+	window.onscroll = function() {scrollfunction()};
+
+	var navbar = document.getElementById("navbarsearch");
+	var sticky = navbar.offsetTop;
+
+	function scrollfunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
 </script>

@@ -59,6 +59,31 @@ class register extends db
 		    return "errUnk";
 		}
 	}
+
+	/**
+	 *
+	 * send email authentication message 
+	 * @param $to=to whome to send,$code=authentication code 
+	 * @return Case #1 -> success => successfuly deleted
+	 *         Case #2 -> errUnk = when the data is not deleted because of either there is interuption in connection or other 
+	 *         Case #3 -> invalid = when the enterd key is not correct 
+	*/
+	private function sendEmailReset($to,$code){
+		$to = $this->myencode($to);
+		$code = $this->myencode($code);
+		$sub = 'Verify Your Email Address!';
+		$headers =  "From: Qefira-clone";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$body = "Verification code is <b>".$code."</b> <br>
+					use this link to insert the verification code <a href='http://localhost/qefira-clone/public/?passwdresetmodal=".$to."'> click here </a>"
+			;
+		if (mail($to, $sub, $body, $headers)) {
+		    return "success";
+		} else {
+		    return "errUnk";
+		}
+	}
 #################################################################################################################################
 
 	/**
@@ -357,12 +382,16 @@ class register extends db
 		$date_path = $this->dateGenerator("mdY");
         $rand = uniqid();
 
-		$main = $_FILES[$file] ['name'];
-        $name = "MFile_".$date_path."_".$rand."_".$main."";
-        $loc = $_FILES[$file] ['tmp_name'];
+		$main = $_FILES[$file]['name'];
+        $name = "UFile_".$date_path."_".$rand."_".$main."";
+        $loc = $_FILES[$file]['tmp_name'];
         if(move_uploaded_file($loc, $folder.$name)){
-        	$this->registerUsersFile($usr_id,$name);
-        	return "success";
+        	$tester = $this->registerUsersFile($usr_id,$name);
+        	if($tester=="success"){
+        		return "success";
+        	}else{
+        		return "errUnk";
+        	}
         }else{
         	return "errUnk";
         }
@@ -382,7 +411,12 @@ class register extends db
 		$date_path = $this->dateGenerator("mdY");
         $rand = uniqid();
 
-		$this->uploadUsersFile($usr_id,$file,$folder);
+		$tester=$this->uploadUsersFile($usr_id,$file,$folder);
+		if($tester=="success"){
+        	return "success";
+        }else{
+        	return "errUnk";
+        }
 	}
 
 	/**
@@ -402,5 +436,47 @@ class register extends db
 		}
 	}
 
+
+	/**
+	 * Insertion of data to Users File table
+	 * @param $usr_id = item id,  $email= email of the user
+	 * @return Case #1 -> success = data succesfuly inserted
+	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
+	 *         Case #3 -> errSend = when the email is not sended because of either there is interuption in connection or other factors.
+	 */
+	public function sendPassReset($usr_id, $email){
+		$usr_id = $this->myencode($usr_id);
+		$email = $this->myencode($email);
+		$rand = mt_rand(100000,999999);
+		$emailsend = $this->sendEmailReset($email,$rand);
+		if($emailsend=="success"){
+			$sql = "UPDATE users SET passreset='$rand' WHERE usr_id='$usr_id'";
+			if(mysqli_query($this->conn(), $sql)){
+				return "success";
+			}else{
+				return "errUnk";
+			}
+		}else{
+			return "errSend";
+		}
+	}
+
+	/**
+	 * Insertion of data to Users File table
+	 * @param $usr_id = item id,  $newpass= new password changed
+	 * @return Case #1 -> success = data succesfuly inserted
+	 *         Case #2 -> errUnk = when the data is not inserted because of either there is interuption in connection or other factors.
+	 */
+	public function passwordReset($usr_id, $newpass){
+		$usr_id = $this->myencode($usr_id);
+		$newpass = md5($this->myencode($newpass));
+
+		$sql = "UPDATE users SET password='$newpass' WHERE usr_id='$usr_id'";
+		if(mysqli_query($this->conn(), $sql)){
+			return "success";
+		}else{
+			return "errUnk";
+		}
+	}
 
 }

@@ -1,8 +1,6 @@
 <?php 
 
-if(!isset($_SESSION['adminid'])){
-    header("location: ../admin/?errSession");
-}
+
 ?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
 <center>

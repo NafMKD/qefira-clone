@@ -1,6 +1,7 @@
 <?php 
-
-
+if(!isset($_SESSION['adminid'])){
+    header("location: ../admin/?errSession");
+}
 ?>
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
 

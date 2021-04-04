@@ -66,7 +66,7 @@
 	?>
 	<div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">Searched Items:</h3>
+            <h3 class="card-title">Searched Items: For - <?php echo ucwords($_GET['q']); ?></h3>
             <div class="card-tool">
                 <a href="#" id="detailBack" class="float-md-right mr-5">
                     <i class="fas fa-angle-left mr-1"></i>
@@ -128,7 +128,7 @@
 	?>
 	<div class="card card-outline card-primary">
         <div class="card-header">
-            <h3 class="card-title">Searched Items:</h3>
+            <h3 class="card-title">Searched Items: For - <?php echo ucwords($_GET['i']); ?></h3>
             <div class="card-tool">
                 <a href="#" id="detailBack" class="float-md-right mr-5">
                     <i class="fas fa-angle-left mr-1"></i>

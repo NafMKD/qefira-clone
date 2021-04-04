@@ -7,7 +7,7 @@ if(!isset($_GET['q']) || $_GET['q']==""){
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
-
+include 'includes/forgetpass.php';
 $catagories = $obj_fetch->fetchCatagories("ALL");
 ?>
 <!DOCTYPE html>

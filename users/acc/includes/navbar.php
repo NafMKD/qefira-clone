@@ -54,3 +54,64 @@ $unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['useri
         </li>
     </ul>
 </nav>
+
+<div class="modal fade" id="modal-changepassword">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Change Password</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <p class="login-box-msg">Enter new password</p>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <?php if(isset($final_pass_change_return)){ ?>
+                <div class='alert <?php echo $final_pass_change_return[0]; ?> alert-dismissible'>
+                  <center>
+                    <i class='icon fa fa-<?php echo $final_pass_change_return[1]; ?>'></i>
+                    <?php echo $final_pass_change_return[2]; ?>
+                    <br>
+                  </center>
+                </div>
+              <?php }?>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" name="old_pass_change" placeholder="Old Password.." required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-eye"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-3">
+                <input type="password" class="form-control" name="new_pass_change" placeholder="New Password.." required>
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <span class="fas fa-eye"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-7"></div>
+            <div class="col-5">
+              <button type="submit" class="btn btn-primary btn-block sibtn" name="btn_change_pass" >Change <i class="fas fa-edit"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

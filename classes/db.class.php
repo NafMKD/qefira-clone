@@ -3,6 +3,7 @@
 /**
  * Database Connection
  */
+error_reporting(0);
 class db
 {	
 	private $host = "localhost";

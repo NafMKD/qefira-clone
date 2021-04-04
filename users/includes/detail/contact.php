@@ -1,6 +1,6 @@
 <?php 
 $user_info = $obj_fetch->fetchUsers("INDIVIDUAL", "usr_id/".$item_detail['usr_id'])[0];
-$user_file = $obj_fetch->fetchUsersFile("INDIVIDUAL", "usr_id/".$_SESSION['userid']);
+$user_file = $obj_fetch->fetchUsersFile("INDIVIDUAL", "usr_id/".$item_detail['usr_id']);
 ?>
 <div class="card card-primary card-outline">
   <div class="card-body box-profile">

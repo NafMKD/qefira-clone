@@ -7,7 +7,7 @@ if(!isset($_GET['c']) || $_GET['c']==""){
 $obj_register = new register;
 $obj_fetch = new fetch;
 $obj_const = new constant;
-
+include 'includes/forgetpass.php';
 $catagories = $obj_fetch->fetchCatagories("ALL");
 $catagories_detail = $obj_fetch->fetchCatagories("INDIVIDUAL", "cat_id/". $_GET['c'])[0];
 $items_normal = $obj_fetch->fetchItems("CATAGORIES", "DESC/".$_GET['c']."/1");

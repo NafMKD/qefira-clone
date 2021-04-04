@@ -45,7 +45,7 @@
 	$(function(){
 		$("#dataTable").DataTable({
 			"responsive": true,
-			"autoWidth": false,
+			"autoWidth": false
 		});
 		$('.select2').select2({
 			theme: 'bootstrap4'
@@ -62,10 +62,17 @@
 	    });
 	});
 	function fileSizeLimiter(d){
-	  	var ti = $('#photofile').get(0).files.length;
-	  	if(ti>d){
+	  	var ti = $('#photofile').get(0).files;
+	  	if(ti.length>d){
 	  		$('#errFileSize').html("Maximum file size is "+d+"!");
 	  		return false;
+	  	}
+	  	for (var i = 0; i < ti.length; i++) {
+	  		var sp = ti[i].name.split(".");
+	  		if(sp[1]!="jpg" && sp[1]!="jpeg" && sp[1]!="png" && sp[1]!="gif"){
+	  			$('#errFileSize').html("Invalid file type, All files should be photos!");
+	  			return false;
+	  		}
 	  	}
 	}
 	<?php if(isset($_GET['listItem']) && isset($_GET['view']) ):?>
@@ -75,5 +82,8 @@
 			$('.product-image-thumb.active').removeClass('active');
 			$(this).addClass('active');
 		});
+	<?php endif ?>
+	<?php if(isset($final_pass_change_return)):?>
+		$('#modal-changepassword').modal('show');
 	<?php endif ?>
 </script>

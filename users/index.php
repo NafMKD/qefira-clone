@@ -46,15 +46,15 @@ if(isset($_GET['errSession'])){
 							$filepath = $obj_fetch->fetchItemsFile("INDIVIDUAL", "item_id/".$key['item_id'])[0];
 							?>
 							<?php if($cntp<6): ?>
-							<div class="position-relative p-1 bg-white" style="height: auto;">
+							<div class="position-relative p-1 bg-lightblue" style="border-radius: 25px;">
 								<a href="detail.php?i=<?php echo $key['item_id'];?>">
-								<img src="../files/items/<?php echo $filepath['filePath']; ?>"class="img-fluid">
+								<img src="../files/items/<?php echo $filepath['filePath']; ?>"class="img-fluid" style="height: 260px;border-top-left-radius: 25px;border-top-right-radius: 25px;">
 								<div class="ribbon-wrapper ribbon-lg">
 									<div class="ribbon text-lg" style="background: #DDA549;">
 										Gold
 									</div>
 								</div>
-								<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo number_format($key['price']); ?>
+								<p class="ml-3"><?php echo ucwords($key['name']); ?></p> <p class="ml-3" style="color: black;"> Br. <?php echo number_format($key['price']); ?></p>
 								</a>
 							</div>
 							<?php endif ?>
@@ -73,14 +73,14 @@ if(isset($_GET['errSession'])){
 							<?php if($cntf<8): ?>
 							<div class="col-md-3 mt-3">
 								<a href="detail.php?i=<?php echo $key['item_id'];?>">
-								<div class="position-relative p-1 bg-white" style="height: auto;">
-									<img src="../files/items/<?php echo $filepath['filePath']; ?>"class="img-fluid">
+								<div class="position-relative p-1 bg-lightblue" style="border-radius: 25px;">
+									<img src="../files/items/<?php echo $filepath['filePath']; ?>"class="img-fluid" style="height: 260px;border-top-left-radius: 25px;border-top-right-radius: 25px;">
 									<div class="ribbon-wrapper ribbon-lg">
 										<div class="ribbon text-lg bg-warning">
 											New
 										</div>
 									</div>
-									<?php echo ucwords($key['name']); ?> <br/> Br. <?php echo number_format($key['price']); ?>
+									<p class="ml-3"><?php echo ucwords($key['name']); ?></p> <p class="ml-3" style="color: black;"> Br. <?php echo number_format($key['price']); ?></p>
 								</div>
 								</a>
 							</div>

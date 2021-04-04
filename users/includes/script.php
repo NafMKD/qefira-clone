@@ -26,4 +26,16 @@
 			window.history.back();
 		});
 	<?php endif ?>
+	window.onscroll = function() {scrollfunction()};
+
+	var navbar = document.getElementById("navbarsearch");
+	var sticky = navbar.offsetTop;
+
+	function scrollfunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
 </script>

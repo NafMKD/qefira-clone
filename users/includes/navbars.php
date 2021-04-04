@@ -1,12 +1,10 @@
 <?php 
 
-if(!isset($_SESSION['userid'])){
-    header("location: ../public/?errSession");
-}
+
 $unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['userid']."/0");
 ?>
 
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white mb-2">
   <div class="container">
     <div class="collapse navbar-collapse order-3" id="navbarCollapse">
     </div>
@@ -28,7 +26,7 @@ $unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['useri
 </div>
 </nav>
 
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white mt-2 mb-2">
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white  mb-2" id="navbarsearch">
   <div class="container">
     <a href="/qefira-clone/users/" class="navbar-brand">
       <img src="../assets/dist/img/q.svg" alt="Q Logo" class="brand-image"
@@ -43,14 +41,14 @@ $unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['useri
 
       <form class="form-inline ml-5" style="width: 100%;" action="search.php">
         <div class="input-group input-group-md" style="width: 95%;">
-          <input class="form-control form-control-navbar " name="q" style="border: red 1px solid;" type="search" 
+          <input class="form-control form-control-navbar " name="q" style="border-top: #004ecc 1px solid;border-left: #004ecc 1px solid;border-bottom: #004ecc 1px solid;" type="search" 
           <?php if(isset($_GET['q'])): ?>
             value = "<?php echo $_GET['q']; ?>"
             <?php else: ?>
              placeholder="i'm loking for..."
              <?php endif ?> aria-label="Search">
              <div class="input-group-append">
-              <button class="btn btn-navbar" type="submit" style="border: red 1px solid;" >
+              <button class="btn btn-navbar" type="submit" style="border-top: #004ecc 1px solid;border-right: #004ecc 1px solid;border-bottom: #004ecc 1px solid;" >
                 <i class="fas fa-search"></i>
               </button>
             </div>
@@ -63,14 +61,14 @@ $unread_messages_for_aside = $obj_fetch->fetchMessage("STATUS", $_SESSION['useri
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
         <li class="nav-item">
           <a href="acc/item.php?addNewItem">
-          	<button class="btn btn-danger btn-flat btn-md" >Post Free Ad</button>
+          	<button class="btn btn-primary btn-flat btn-md" >Post Free Ad</button>
           </a>
         </li>
       </ul>
     </div>
   </nav>
 
-  <nav class="main-header navbar navbar-expand-md  navbar-danger">
+  <nav class="navbar navbar-expand-md  navbar-primary">
     <div class="container">  
       <ul class="navbar-nav ml-4" >
         <?php $cnt=0;foreach ($catagories as $key): ?>

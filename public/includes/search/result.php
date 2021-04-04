@@ -30,13 +30,13 @@
 		<?php endforeach ?>
 	<?php else: ?>
 		<div class="callout callout-danger">
-			<h5>oops, we can't find anything in our database!</h5>
+			<h5>oops, we can't find anything related to "<?php echo $_GET['q']; ?>" in our database!</h5>
 		</div>
 	<?php endif ?>
 	<?php if(count($search_items)!=0): ?>
 		<?php if(count($search_items)==$cnt1): ?>
 			<div class="callout callout-danger">
-				<h5>oops, we can't find anything in our database!</h5>
+				<h5>oops, we can't find anything related to "<?php echo $_GET['q']; ?>" in our database!</h5>
 			</div>
 		<?php endif ?>
 	<?php endif ?>
@@ -73,13 +73,13 @@
 		<?php endforeach ?>
 	<?php else: ?>
 		<div class="callout callout-danger">
-			<h5>oops, we can't find anything in our database!</h5>
+			<h5>oops, we can't find anything related to "<?php echo $_GET['q']; ?>" in our database!</h5>
 		</div>
 	<?php endif ?>
 	<?php if(count($search_items)!=0): ?>
 		<?php if(count($search_items)==$cnt2): ?>
 			<div class="callout callout-danger">
-				<h5>oops, we can't find anything in our database!</h5>
+				<h5>oops, we can't find anything related to "<?php echo $_GET['q']; ?>" in our database!</h5>
 			</div>
 		<?php endif ?>
 	<?php endif ?>

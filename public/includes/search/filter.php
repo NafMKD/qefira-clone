@@ -7,16 +7,16 @@ if(isset($_GET['q'])){
 <label>Sort By:</label>
 <ul class="list-unstyled" style="font-size: 15px;">
 	<li>
-		<a href="?f=0<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-down text-red mr-2"></i> Newest</a>
+		<a href="?f=0<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-down text-blue mr-2"></i> Newest</a>
 	</li>
 	<li>
-		<a href="?f=1<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-up text-red mr-2"></i> Oldest</a>
+		<a href="?f=1<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-up text-blue mr-2"></i> Oldest</a>
 	</li>
 	<li>
-		<a href="?f=2<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-up text-red mr-2"></i> Price (Low-High)</a>
+		<a href="?f=2<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-up text-blue mr-2"></i> Price (Low-High)</a>
 	</li>
 	<li>
-		<a href="?f=3<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-down text-red mr-2"></i> Price (High-Low)</a>
+		<a href="?f=3<?php echo $urlpathFilter; ?>" class="nav-link text-dark"><i class="fas fa-arrow-down text-blue mr-2"></i> Price (High-Low)</a>
 	</li>
 </ul>
 

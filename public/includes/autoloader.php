@@ -10,3 +10,6 @@ function ThisAutoloader($classname)
   }
   include_once $path;
 }
+if(isset($_SESSION['userid'])){
+  header('location: ../users/');
+}
